@@ -16,6 +16,9 @@ import RootStackScreen from './screens/loginScreens/RootStackScreen';
 import * as Animatable from 'react-native-animatable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import images from './images';
+import {getuser, setuser} from './constants/tokenHandler';
+import QRScanPickup from './screens/homeStack/QrScanPickup'
+
 
 import { AuthContext } from './components/context';
 const Drawer = createDrawerNavigator();
@@ -24,7 +27,6 @@ const App = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const initialLoginState = {
-    isLoading: true,
     userToken: null,
   };
 
@@ -68,10 +70,10 @@ const App = () => {
       try {
         await AsyncStorage.setItem('userToken', userToken);
       } catch(e) {
-        console.log(e);
+        console.log('appjs signIn',e);
       }
-     
       dispatch({ type: 'LOGIN', token: userToken });
+      
     },
      signOut: async() => {
       // setUserToken(null);
@@ -105,13 +107,14 @@ const App = () => {
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem('userToken');
+         setuser(userToken);
       } catch(e) {
         console.log(e);
       }
       dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
-    }, 1000);
+    }, 2000);
   }, []);
-
+  
   if( loginState.isLoading ) {
     return(
       <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: '#000'}}>
@@ -137,8 +140,8 @@ const App = () => {
       { loginState.userToken !== null ? (
 
      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-          <Drawer.Screen name="HomeDrawer" component={MainTabScreen} /> 
-      
+          <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
+          <Drawer.Screen name="QRScanPickup" component={QRScanPickup} /> 
         </Drawer.Navigator>
       )
     :

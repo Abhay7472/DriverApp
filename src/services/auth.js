@@ -1,5 +1,29 @@
 import * as Constants from "../constants/urls";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getuser} from '../constants/tokenHandler';
+
+
+export const emailCheck = (emailId) => {
+    
+   const URL = Constants.BASE_URL+Constants.BASIC_LIST+Constants.EMAIL_EXIST;
+    let formdata = new FormData();
+    formdata.append("email", emailId)
+    console.log("check email",formdata)
+    return fetch(URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        body: formdata
+    })
+    .then((response) => response.json()).then((json) => {
+        console.log("res",json)
+        return json
+    }).catch((error) => {
+        console.error("email",error);
+    });
+}
+
 
 export const signup = (fullName, contactNo, emailId, passwordCheck, driversLicense, backgroundCheck, registration, licensePlateNo,
                         insurance, socialSecurityNo, driversLicensePhoto, backgroundCheckPhoto,registrationPhoto, licensePlateNoPhoto, insurancePhoto,
@@ -108,7 +132,7 @@ export const signin = (emailId, passwordCheck,appToken) => {
     formdata.append("email", emailId)
     formdata.append("password",passwordCheck)
     formdata.append("app_reg_token",appToken)
-    console.log("app token...", appToken)
+    
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -120,7 +144,7 @@ export const signin = (emailId, passwordCheck,appToken) => {
     .then((response) => response.json()).then((json) => {
         return json
     }).catch((error) => {
-        console.error(error);
+        console.error('signIn api',error);
     });
 }
 
@@ -157,5 +181,43 @@ export const communitySecurity = () => {
     })
     .catch((error) => {
       console.error(error);
+    });
+};
+
+export const getStateList =() => {
+    
+   const URL = Constants.BASE_URL+Constants.BASIC_LIST+Constants.STATE_LIST;
+    return fetch(URL,{
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      return json;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const logout = () => {
+    token = null;
+    token = getuser()
+  const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.LOGOUT;
+  return fetch(URL,{
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      return json;
+    })
+    .catch((error) => {
+      console.error("error here", error );
     });
 };

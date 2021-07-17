@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { View, 
     Alert,
     Text,  
@@ -21,12 +21,13 @@ import { AuthContext } from '../../components/context';
 import images from '../../images';
 import Button from '../../components/button';
 import loginStyles from './loginComponentsStyles';
-import messaging from '@react-native-firebase/messaging';
+import {getnotifiToken} from '../../constants/tokenHandler'
+import{setuser} from '../../constants/tokenHandler'
 
 const SignInScreen = ({ navigation }) => {
 
     
-   const [data, setData] = React.useState({
+    const [data, setData] = useState({
         emailId: '',
         passwordCheck: '',
         appToken:'',
@@ -36,104 +37,105 @@ const SignInScreen = ({ navigation }) => {
         isValidpasswordCheck: true,
     });
 
-    const { signIn } = React.useContext(AuthContext);
+       
+
+        const { signIn } = React.useContext(AuthContext);
 
     useEffect(() => {
-        // if (Platform.OS === 'ios'){
-        // }
-        messaging()
-            .getToken()
-            .then(token => {
-                    setData({ appToken:token});
-                // return saveTokenToDatabase(token);
-                 console.log('notificatio.....', data.appToken)
-            });
+         getToken() 
     }, [])
 
-    const onSignIn =() => {
-       
-       if(validate(data.emailId)){
-           if(data.passwordCheck.length == 8){
-                    signin( data.emailId, data.passwordCheck,data.appToken )
+        const getToken=() =>{
 
-                    .then((res) => {
-                    
-                    if (res.code == 200){
-                    if (res.success == "false"){
-                        alert(res.message)
-                        navigation.navigate('SignInScreen')
-                        } 
-                     else {
-                        const foundUser = async () => {
-                    
-                        try {
-                            await AsyncStorage.setItem(
-                            'userToken',
-                            res["driver_details"]["access_token_db"]
-                            );
-                        } catch (error) {
-                            console.log("setData error", e)
-                            // Error saving data
-                        }
-                        };
+            setTimeout(() => {
+                var response = getnotifiToken()
+            setData({ 
+                ...data,
+                appToken:response});
+            }, 1500);
+              
+        }
 
-                        const saveBankKey = async () => {
-                    
-                        try {
-                            await AsyncStorage.setItem(
-                            'bank_Key',
-                            res["driver_details"]["bank_acc_key"]
-                            );
-                        } catch (error) {
-                            console.log("setData error", e)
-                            // Error saving data
-                        }
-                        };
+    const onSignIn =() => { 
+        if(validate(data.emailId)){
+            if(data.passwordCheck.length > 7){
+                        signin( data.emailId, data.passwordCheck,data.appToken )
 
-                        foundUser();
+                        .then((res) => {
                         
-                        saveBankKey();
-                         signIn(res["driver_details"]["access_token_db"])
+                        if (res.code == 200){
+                            if (res.success == "false"){
+                                alert(res.message)
+                                navigation.navigate('SignInScreen')
+                                } 
+                            else {
+                                const foundUser = async () => {
                             
+                                try {
+                                    await AsyncStorage.setItem(
+                                    'userToken',
+                                    res["driver_details"]["access_token_db"]
+                                    );
+                                } 
+                                catch (error) {
+                                    console.log("setData error", e)
+                                }
+                                };
 
-                        //navigation.navigate('MainTabScreen')
+                                const saveBankKey = async () => {
+                            
+                                try {
+                                    await AsyncStorage.setItem(
+                                    'bank_Key',
+                                    res["driver_details"]["bank_acc_key"]
+                                    );
+                                } catch (error) {
+                                    console.log("setData error", e)
+                                }
+                                };
+
+                                foundUser();
+                                saveBankKey();
+                                setuser(res["driver_details"]["access_token_db"])
+                                signIn(res["driver_details"]["access_token_db"])
+                                    
+                            }
                     }
-                    }
-                    else {
+                        else {
+                            ToastAndroid.showWithGravityAndOffset(
+                            res.message,
+                            ToastAndroid.LONG,
+                            ToastAndroid.BOTTOM,
+                            25,
+                            50
+                            );
+                        }
+                        
+                    })
+
+            }
+            else {
                         ToastAndroid.showWithGravityAndOffset(
-                        res.message,
-                        ToastAndroid.LONG,
-                        ToastAndroid.BOTTOM,
-                        25,
-                        50
-                        );
-                    }
-                    
-                })
-
-           }
-           else {
-                    ToastAndroid.showWithGravityAndOffset(
-                        'Please enter correct passwordCheck',
-                        ToastAndroid.LONG,
-                        ToastAndroid.BOTTOM,
-                        25,
-                        50
-                      ); 
-                } 
-       }
-       
-       else{
-    ToastAndroid.showWithGravityAndOffset(
-      'Please enter correct Email',
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50
-    );
+                            'Please enter correct password',
+                            ToastAndroid.LONG,
+                            ToastAndroid.BOTTOM,
+                            25,
+                            50
+                        ); 
+                    } 
+        }
+        
+        else{
+        ToastAndroid.showWithGravityAndOffset(
+        'Please enter correct Email',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+        );
+        }
     }
-    }
-    
+        
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
             setData({
@@ -191,13 +193,10 @@ const SignInScreen = ({ navigation }) => {
 
     const validate = (text) => {
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-        if (reg.test(text) === false) {
-            
-            
+        if (reg.test(text) === false) {   
             return false;
         }
         else {
-            
             return true;
         }
     }

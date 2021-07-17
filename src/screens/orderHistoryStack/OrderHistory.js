@@ -1,22 +1,32 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import {View} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import OrderTabNav from './OrderTabNav';
 
-const DeliveryScreen = ({navigation}) => {
-    return (
-      <View style={styles.container}>
-        <Text style ={{ color:'#fff'}}> Delivery Screen</Text>
-      
-      </View>
-    );
-};
 
-export default DeliveryScreen;
+const OrderHistory = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor:'#000',
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
-  },
-});
+const OrderHistoryScreen = ({navigation}) => (
+
+<OrderHistory.Navigator screenOptions={{
+        headerStyle: {
+        backgroundColor: '#000'},
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+        fontWeight: 'bold'
+        },
+        headerLeft: () => (
+            <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => navigation.openDrawer()}></Icon.Button> ),
+        headerRight: () => (
+            <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => {}}></FontAwesome.Button>)
+    }}>
+
+        <OrderHistory.Screen name="OrderTabNav" component={OrderTabNav} options={{title:'Order History',}}/>
+        
+</OrderHistory.Navigator>
+);
+
+export default OrderHistoryScreen; 

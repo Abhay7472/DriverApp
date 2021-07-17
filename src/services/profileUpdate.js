@@ -1,35 +1,37 @@
 import * as Constants from "../constants/urls";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getuser} from '../constants/tokenHandler';
 
-export const getProfile = async () => {
-  try {
-    const value = await AsyncStorage.getItem('userToken')
-        if(value !== null) {
-        console.log("check1", value)
+export const getProfile = () => {
+  token = null;
+  token = getuser() 
     const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.GET_PROFILE;
-    let response = await fetch(URL,{
+   return fetch(URL,{
       headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': value,
+            'Authorization': token,
           },
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log('here',json)
+      return json;
+    })
+    .catch((error) => {
+      console.error("get profile",error);
     });
-    let json = await response.json();
-    return json;
-  }
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 
-export const editProfile = (contactNo,address,pinCode,city,state,bankName,benificiaryName,routingNo,accountNo,accountType,token) => {
+export const editProfile = (contactNo,address,areaCode,city,state,bankName,benificiaryName,routingNo,accountNo,accountType) => {
+    
+    token = null;
+    token = getuser() 
     const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.EDIT_PROFILE;
-    console.log("token.....",token)
     let formdata = new FormData();
     formdata.append("contact_no", contactNo)
     formdata.append("address", address)
-    formdata.append("pin_code", pinCode)
+    formdata.append("pin_code", areaCode)
     formdata.append("city", city)
     formdata.append("state", state)
     formdata.append("bank_name", bankName)
@@ -51,7 +53,7 @@ export const editProfile = (contactNo,address,pinCode,city,state,bankName,benifi
         return json
         console.log("json value__", json)
     }).catch((error) => {
-        console.error(error);
+        console.error('edit profile api',error);
     });
 
 };

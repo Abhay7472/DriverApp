@@ -19,20 +19,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import{ AuthContext } from '../components/context';
 import { getProfile } from "../services/profileUpdate";
 
+
 export function DrawerContent(props) {
     const { signOut } = React.useContext(AuthContext);
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = React.useState([]);
 
     useEffect(() =>{
-    console.log("in Drawer")
     getProfile()  
     .then((res) => {
       if (res.code == 200){
           if (res.success == "false"){
               alert(res.message)
               console.log(res.message)
-
           }
         else {
           setData(res);
@@ -48,8 +47,7 @@ export function DrawerContent(props) {
           50
           );
       }
-    } ,2000)
-    
+    })  
   }, []);
 
 
@@ -153,6 +151,18 @@ export function DrawerContent(props) {
                         </TouchableRipple>
                     </Drawer.Section>
                      <Drawer.Section >
+                        <TouchableRipple onPress={() =>{props.navigation.navigate('QRScanPickup')}}>
+                            <View style={styles.preference}>
+                                <Text>Scan QR code</Text>
+                                <Icon 
+                                    name="chevron-right"  
+                                    color={'#000'}
+                                    size={22}
+                                />
+                            </View>
+                        </TouchableRipple>
+                    </Drawer.Section>
+                    <Drawer.Section >
                         <TouchableRipple onPress={() =>{props.navigation.navigate('Profile')}}>
                             <View style={styles.preference}>
                                 <Text>Add Bank Details</Text>

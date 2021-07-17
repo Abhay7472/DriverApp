@@ -20,262 +20,117 @@ import {
 import { CommonActions } from "@react-navigation/native";
 import { Picker } from '@react-native-picker/picker';
 import Card from '../../components/card';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../components/button';
 import { getProfile,editProfile } from "../../services/profileUpdate";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getStateList} from '../../services/auth';
+
 
 const ProfileScreen = (props) => {
   const [isLoading, setLoading] = useState(true);
  const [data, setData] = React.useState([]);
-  // const bankDetails = React.createRef();
-  var [text, setText] = useState({
-    contactNo:'',
-    address: '',
-    pinCode: '',
-    city: '',
-    state: '',
-    token: '',
-    bankName:'',
-    benificiaryName:'',
-    routingNo:'',
-    accountNo:'',
-    accountType:'',
-  });
+ const [image,setImage] = React.useState([]);
+  const [contactNo, setContactNo] = useState('')
+  const [address ,setAddress] = useState('')
+  const [areaCode, setAreaCode] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [bankName, setBankName] = useState('')
+  const [benificiaryName, setBenificiaryName] = useState('')
+  const [routingNo, setRoutingNo] = useState('')
+  const [accountNo,setAccountNo] = useState('')
+  const [accountType, setAccountType] = useState('')
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [areaCodeList, setAreaCodeList] = useState([]);
+
 
   useEffect(() =>{
-    getProfile()  
-    .then((res) => {
-    
-      if (res.code == 200){
-          if (res.success == "false"){
-              alert(res.message)
-          }
-        else {
-          setData(res);
-          console.log("res...", res)
-          };   
-          setLoading(false); 
-            
-      }
-      else {
-          ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-          );
-      }
-      getToken();
-    })
-   
-    
+    ProfileGet()
+    StateList()
   }, []);
 
-    
-  const contactNoInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                contactNo: val,
-                check_contactNoInputChange: true
-            });
-        }
+    function ProfileGet(){
+          getProfile()  
+        .then((res) => {
         
+          if (res.code == 200){
+              if (res.success == "false"){
+                  alert(res.message)
+              }
+            else {
+              {
+              setData(res)
+              setImage(res.driver_details.profile_image)
+              setContactNo(res.driver_details.contact_no)
+              setAddress(res.driver_details.address)
+              setAreaCode(res.driver_details.pin_code)
+              setCity(res.driver_details.city)
+              setState(res.driver_details.state)
+              setBankName(res.driver_details.bank_name)
+              setBenificiaryName(res.driver_details.bank_beneficiary)
+              setRoutingNo(res.driver_details.bank_routing_no)
+              setAccountNo(res.driver_details.bank_acc_key )
+              setAccountType(res.driver_details.bank_acc_type)
+              }
+              setLoading(false); 
+              };   
+                
+          }
+          else {
+              ToastAndroid.showWithGravityAndOffset(
+              res.message,
+              ToastAndroid.LONG,
+              ToastAndroid.BOTTOM,
+              25,
+              50
+              );
+          }
+        }) 
+    }
+
+    function StateList(){
+     getStateList()  
+      .then((res) => {
+        if (res.code == 200){
+            if (res.success == "false"){
+                alert(res.message)
+            }
+          else {
+            setStateList(res.state_list);
+            setCityList(res.city_list)
+            setAreaCodeList(res.area_code_list);
+            setLoading(false);
+            };  
+        }
         else {
-            setText({
-              
-                contactNo:val,
-                check_contactNoInputChange: false
-            });
+            ToastAndroid.showWithGravityAndOffset(
+            res.message,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+            );
         }
-    }
-    const addressInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                address: val,
-                check_addressInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                address: val,
-                check_addressInputChange: false
-            });
-        }
-    }
+    })
 
-    const pinCodeInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                pinCode: val,
-                check_pinCodeInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                pinCode: val,
-                check_pinCodeInputChange: false
-            });
-        }
-    }
-
-    const stateInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                state: val,
-                check_stateInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                state: val,
-                check_stateInputChange: false
-            });
-        }
-    }
-
-    const cityInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                city: val,
-                check_cityInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                city: val,
-                check_cityInputChange: false
-            });
-        }
-    }
-
-    const bankNameInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                bankName: val,
-                check_bankNameInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                bankName: val,
-                check_bankNameInputChange: false
-            });
-        }
-    }
-    const benificiaryNameInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                benificiaryName: val,
-                check_benificiaryNameInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                benificiaryName: val,
-                check_benificiaryNameInputChange: false
-            });
-        }
-    }
-    const routingNoInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                routingNo: val,
-                check_routingNoInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                routingNo: val,
-                check_routingNoInputChange: false
-            });
-        }
-    }
-    const accountNoInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                accountNo: val,
-                check_accountNoInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                accountNo: val,
-                check_accountNoInputChange: false
-            });
-        }
-    }
-    const accountTypeInputChange = (val) => {
-        if( val.length !== 0 ) {
-            setText({
-                ...text,
-                accountType: val,
-                check_accountTypeInputChange: true
-            });
-        } else {
-            setText({
-                ...text,
-                accountType: val,
-                check_accountTypeInputChange: false
-            });
-        }
-    }
-      const getToken = async () => {
-      try {
-        const value = await AsyncStorage.getItem('userToken')
-        if(value !== null) {
-          setText({
-                ...text,
-                token: value,   
-            });
-        }
-      } catch(e) {
-
-        console.log("token error",e)
-      }
-    }
-
+  }
+ 
     const saveBankKey = async () => {
         try {
-            await AsyncStorage.setItem('bank_Key',data.driver_details.bank_acc_key);
+            await AsyncStorage.setItem('bank_Key',accountNo);
         } catch (e) {
             console.log("error", e)
         } 
-        console.log('bank key saved', bank_Key)
         };
 
 
-     function updateData(){
-      setText({    
-        contactNo:data.driver_details.contact_no,
-        address:data.driver_details.address,
-        pinCode:data.driver_details.pin_code,
-        city:data.driver_details.city,
-        state:data.driver_details.state,
-        bankName:data.driver_details.bank_name,
-        benificiaryName:data.driver_details.bank_beneficiary,
-        routingNo:data.driver_details.bank_routing_no,
-        accountNo:data.driver_details.bank_acc_key,
-        accountType:data.driver_details.bank_acc_type,
-      });
-       console.log('neww data>>>');
-    }
     
     function onEditProfile(){
-        updateData(data);
-      if(text.token !== null){
-           editProfile(text.contactNo,text.address,text.pinCode,text.city,text.state,
-                      text.bankName,text.benificiaryName,text.routingNo,text.accountNo,text.accountType,text.token)
+
+           editProfile(contactNo,address,areaCode,city,state,
+                      bankName,benificiaryName,routingNo,accountNo,accountType)
 
           .then((res) => {
            console.log("check__",res);
@@ -286,6 +141,7 @@ const ProfileScreen = (props) => {
           } 
           else {
           alert('Profile Updated');
+
            saveBankKey();
           }
           }
@@ -301,39 +157,8 @@ const ProfileScreen = (props) => {
         }
                                       
         })
-       }
-       else{
-        return (
-        <View style = {{flex: 1,justifyContent: "center", backgroundColor:'#000'}}>
-          <ActivityIndicator size="large" color="#fff" />
-        </View>
-        )
-       }  
-      
      }
 
-  const { navigation } = props;
-  var offset = 0;
-  var onScrollHandler = (e) => {
-    const currentOffset = e.nativeEvent.contentOffset.y;
-    var direction = currentOffset > offset ? "down" : "up";
-     
-    offset = currentOffset;
-    if (direction === "down") {
-      navigation.dispatch(
-        CommonActions.setParams({
-          tabBarVisible: false,
-
-        })
-      );
-    } else {
-      navigation.dispatch(
-        CommonActions.setParams({
-          tabBarVisible: true,
-        })
-      );
-    }
-  };
   
   
   if (isLoading){
@@ -344,19 +169,16 @@ const ProfileScreen = (props) => {
     )
   }
   else{
-    const imageUrl = data.driver_details.profile_image
+   
     return (
       <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor='#000' barStyle="light-content"/>  
-       <ScrollView
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={onScrollHandler}>  
+       <ScrollView style ={{marginBottom:80}}>  
         <View style={styles.userInfoSection}>
           <View style={{flexDirection: 'row', marginTop: 15}}>
             <Avatar.Image 
               source={{
-                  uri: imageUrl
+                  uri: image
               }}
               size={120}
           />
@@ -408,14 +230,13 @@ const ProfileScreen = (props) => {
           <Text style={styles.text_footer}>Phone Number</Text>
           <View style={styles.action}>
          
-            <TextInput 
-              
-                placeholder={data.driver_details.contact_no != "" ? data.driver_details.contact_no : "Contact Number"}
-                placeholderTextColor = "#fff"
-                style={styles.textInput}
-                autoCapitalize="none"
-                onChangeText={(val) => contactNoInputChange(val)}
-               
+           <TextInput 
+              placeholder={contactNo != "" ? contactNo : "Enter Contact Number"}
+              placeholderTextColor = "#fff"
+              value={contactNo}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => setContactNo(val)}
             />
           </View>
         </View>
@@ -424,53 +245,50 @@ const ProfileScreen = (props) => {
           <Text style={styles.text_footer}>Address</Text>
           <View style={styles.action}>
             <TextInput 
-                placeholder={data.driver_details.address != "" ? data.driver_details.address : "Address"}
+                placeholder={address != "" ? address : "Enter Address"}
                 placeholderTextColor = "#fff"
+                value={address}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => addressInputChange(val)}
+                onChangeText={(val) => setAddress(val)}
             />
           </View>
         </View>
-  
-       
-        <View style={{ flexDirection: 'row'}}>  
-            <View style={[styles.columnSection,{paddingLeft: 30, paddingRight:20,}]}>
-    
-                <Text style={styles.text_footer}>Pin Code</Text>
-              <View style={styles.action}>
-              <TextInput 
-                  placeholder={data.driver_details.pin_code !=""? data.driver_details.pin_code : "Pin Code"}
-                  placeholderTextColor = "#fff"
-                  style={styles.textInput}
-                  autoCapitalize="none"
-                  onChangeText={(val) => pinCodeInputChange(val)}
-              />
-        </View>
-            </View>  
-            <View style={[styles.columnSection,{paddingRight: 30,paddingLeft:20,}]}>
-          <Text style={styles.text_footer}>City</Text>
-          <View style={styles.action}>
-            <TextInput 
-                placeholder={data.driver_details.city !=""? data.driver_details.city :"City"}
-                placeholderTextColor = "#fff"
-                style={styles.textInput}
-                autoCapitalize="none"
-                onChangeText={(val) => cityInputChange(val)}
-            />
-        </View>
-            </View>
-          </View>
+
           <View style={{paddingHorizontal: 30,}}>
             <Text style={styles.text_footer}>State</Text>
             <View style={styles.action}>
-              <TextInput 
-                placeholder={data.driver_details.state !=""? data.driver_details.state :"State"}
-                placeholderTextColor = "#fff"
-                style={styles.textInput}
-                autoCapitalize="none"
-                onChangeText={(val) => stateInputChange(val)}
-              />
+              <Picker
+              style={styles.picker} itemStyle={styles.pickerItem}
+              selectedValue={state}
+              onValueChange={(itemValue, itemIndex) => setState(itemValue)}>
+              {stateList.map((item, key)=>
+              <Picker.Item label={item.state_name} value={item.id} key={item.id} />)}
+            </Picker>
+            </View>
+          </View>
+          <View style={{paddingHorizontal: 30,}}>
+            <Text style={styles.text_footer}>City</Text>
+            <View style={styles.action}>
+                <Picker
+                    style={styles.picker} itemStyle={styles.pickerItem}
+                    selectedValue={city}
+                    onValueChange={(itemValue, itemIndex) => setCity(itemValue)}>
+                    {cityList.map((item, key)=>
+                    <Picker.Item label={item.city_name} value={item.id} key={item.id} />)}
+              </Picker>
+            </View>
+          </View>
+          <View style={{paddingHorizontal: 30,}}>
+            <Text style={styles.text_footer}>Area Code</Text>
+            <View style={styles.action}>
+               <Picker
+                  style={styles.picker} itemStyle={styles.pickerItem}
+                  selectedValue={areaCode}
+                  onValueChange={(itemValue, itemIndex) => setAreaCode(itemValue)}>
+                  {areaCodeList.map((item, key)=>
+                  <Picker.Item label={item.areacode} value={item.id} key={item.id} />)}
+                </Picker>
             </View>
           </View>
         <View  style={{paddingHorizontal: 40, paddingBottom:5,paddingTop:20}}>
@@ -480,12 +298,12 @@ const ProfileScreen = (props) => {
             <Text style={styles.text_footer}>Bank Name</Text>
             <View style={styles.action}>
               <TextInput 
-                // ref={bankDetails} 
-                placeholder={data.driver_details.bank_name !=""? data.driver_details.bank_name :"Bank Name"}
+                placeholder={bankName !=""? bankName :"Enter Bank Name"}
                 placeholderTextColor = "#fff"
+                value={bankName}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => bankNameInputChange(val)}
+                onChangeText={(val) => setBankName(val)}
               />
             </View>
           </View>
@@ -494,11 +312,12 @@ const ProfileScreen = (props) => {
             <Text style={styles.text_footer}>Benificiary Name</Text>
             <View style={styles.action}>
               <TextInput 
-                placeholder={data.driver_details.bank_beneficiary !=""? data.driver_details.bank_beneficiary :"Benificiary Name"}
+                placeholder={benificiaryName !=""? benificiaryName :"Enter Benificiary Name"}
                 placeholderTextColor = "#fff"
+                value={benificiaryName}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => benificiaryNameInputChange(val)}
+                onChangeText={(val) => setBenificiaryName(val)}
               />
             </View>
           </View>
@@ -507,11 +326,12 @@ const ProfileScreen = (props) => {
             <Text style={styles.text_footer}>Routing Number</Text>
             <View style={styles.action}>
               <TextInput 
-                placeholder={data.driver_details.bank_routing_no !=""? data.driver_details.bank_routing_no :"Routing Name"}
+                placeholder={routingNo !=""? routingNo :"Enter Routing Number"}
                 placeholderTextColor = "#fff"
+                value={routingNo}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => routingNoInputChange(val)}
+                onChangeText={(val) => setRoutingNo(val)}
               />
             </View>
           </View>
@@ -520,11 +340,12 @@ const ProfileScreen = (props) => {
             <Text style={styles.text_footer}>Account Number</Text>
             <View style={styles.action}>
               <TextInput 
-                placeholder={data.driver_details.bank_acc_key !=""? data.driver_details.bank_acc_key:"Account Name"}
+                placeholder={accountNo !=""? accountNo :"Enter Account Number"}
                 placeholderTextColor = "#fff"
+                value={accountNo}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => accountNoInputChange(val)}
+                onChangeText={(val) => setAccountNo(val)}
               />
             </View>
           </View>
@@ -534,11 +355,10 @@ const ProfileScreen = (props) => {
           <View style={styles.action}>
             <Picker
               style={styles.picker} itemStyle={styles.pickerItem}
-              selectedValue={text}
-              onValueChange={(val) => accountTypeInputChange(val)}
-            >
-            <Picker.Item label="Savings Account" value="Savings Account" />
-            <Picker.Item label="Checking Account" value="Checking Account" />
+              selectedValue={accountType}
+              onValueChange={(val) => setAccountType(val)}>
+            <Picker.Item label="Savings Account" value="1" />
+            <Picker.Item label="Current Account" value="2" />
           </Picker>
           <View style={styles.arrowWrapper}>
             <Text style={styles.arrow}>&#9660;</Text>
@@ -546,7 +366,7 @@ const ProfileScreen = (props) => {
         </View>
       </View>
 
-       <View style={{marginBottom:70, marginTop:13,alignItems:'center'}}>
+       <View style={{ marginTop:13,alignItems:'center'}}>
         <Button style={styles.submit} onPress={() => onEditProfile()}>
 
               <Text style={{color: '#fff', fontSize:17}}>Submit</Text>     

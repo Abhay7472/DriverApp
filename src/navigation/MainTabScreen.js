@@ -28,6 +28,7 @@ const MainTabScreen = ({ navigation }) => (
       borderRadius: 50,
       height:50,
       keyboardHidesTabBar :true,
+      borderTopWidth: 0,
       }
     }}
   >
@@ -57,7 +58,7 @@ const MainTabScreen = ({ navigation }) => (
         name="OrderHistory"
         component={OrderHistory}
         options={{
-          tabBarLabel: 'Delivery',
+          tabBarLabel: 'OrderHistory',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="history" color={color} size={26}/>
           ),

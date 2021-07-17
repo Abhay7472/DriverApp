@@ -33,6 +33,35 @@ const DetailsScreen = ({route, navigation}) => {
 
     const [isLoading, setLoading] = useState(true);
     const [text, setText] = React.useState([]);
+    const [data, setData] = React.useState({
+        driversLicense: '',
+        backgroundCheck:'',
+        registration: '',
+        licensePlateNo: '',
+        insurance: '',
+        socialSecurityNo: '',
+        driversLicensePhoto: '',
+        backgroundCheckPhoto:'',
+        registrationPhoto: '',
+        licensePlateNoPhoto: '',
+        insurancePhoto: '',
+        socialSecurityNoPhoto: '',
+        driverPhoto:'',
+        facebook:'',
+        linkedin:'',
+        twitter:'',
+        instagram:'',
+        check_driverLicensePhoto: false,
+        check_backgroundCheckPhoto:false,
+        check_registrationPhoto: false,
+        check_licensePlateNoPhoto: false,
+        check_insurancePhoto: false,
+        check_socialSecurityNoPhoto: false,
+        check_driverPhoto:false,
+
+    });
+
+    const { signUp } = React.useContext(AuthContext);
 
     useEffect(() =>{
     communitySecurity()  
@@ -87,36 +116,7 @@ const DetailsScreen = ({route, navigation}) => {
   fall = new Animated.Value(1);
   
 
-  const [data, setData] = React.useState({
-        driversLicense: '',
-        backgroundCheck:'',
-        registration: '',
-        licensePlateNo: '',
-        insurance: '',
-        socialSecurityNo: '',
-        driversLicensePhoto: '',
-        backgroundCheckPhoto:'',
-        registrationPhoto: '',
-        licensePlateNoPhoto: '',
-        insurancePhoto: '',
-        socialSecurityNoPhoto: '',
-        driverPhoto:'',
-        facebook:'',
-        linkedin:'',
-        twitter:'',
-        instagram:'',
-        check_driverLicensePhoto: false,
-        check_backgroundCheckPhoto:false,
-        check_registrationPhoto: false,
-        check_licensePlateNoPhoto: false,
-        check_insurancePhoto: false,
-        check_socialSecurityNoPhoto: false,
-        check_driverPhoto:false,
-
-    });
-
-    const { signUp } = React.useContext(AuthContext);
-
+  
     const permision =()=>{
         PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)    
     }

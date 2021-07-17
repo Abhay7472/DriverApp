@@ -14,6 +14,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import { emailCheck } from "../../services/auth";
 import images from '../../images';
 import Button from '../../components/button';
 import loginStyles from './loginComponentsStyles';
@@ -32,66 +33,104 @@ const SignInScreen = ({navigation}) => {
         confirm_secureTextEntry: true,
     });
 
+    const [check, setCheck] =React.useState(false)
+
+
     function onSubmit() {
     console.log("inside on submit")
     console.log(data)
     
     if(validate(data.emailId)){
-        if(data.fullName.length != 0) {
-            if(data.contactNo.length == 10) {
-                if (data.passwordCheck == data.confirm_password && data.passwordCheck.length > 7 ){
-                    navigation.navigate('DetailsScreen', {emailId: data.emailId, fullName: data.fullName, contactNo: data.contactNo, passwordCheck: data.passwordCheck})
+           if(checkEmail(data.emailId)){
+                if(data.fullName.length != 0) {
+                    if(data.contactNo.length == 10) {
+                        if (data.passwordCheck == data.confirm_password && data.passwordCheck.length > 7 ){
+                            navigation.navigate('DetailsScreen', {emailId: data.emailId, fullName: data.fullName, contactNo: data.contactNo, passwordCheck: data.passwordCheck})
+                        } else {
+                            ToastAndroid.showWithGravityAndOffset(
+                                'Please enter correct password',
+                                ToastAndroid.LONG,
+                                ToastAndroid.BOTTOM,
+                                25,
+                                50
+                            ); 
+                        } 
+                    } else {
+                        ToastAndroid.showWithGravityAndOffset(
+                            'Please enter correct contact number',
+                            ToastAndroid.LONG,
+                            ToastAndroid.BOTTOM,
+                            25,
+                            50
+                        );
+                    }
                 } else {
                     ToastAndroid.showWithGravityAndOffset(
-                        'Please enter correct password',
+                        'Please enter correct fullName',
                         ToastAndroid.LONG,
                         ToastAndroid.BOTTOM,
                         25,
                         50
-                      ); 
-                } 
-            } else {
-                ToastAndroid.showWithGravityAndOffset(
-                    'Please enter correct contact number',
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50
-                  );
-            }
-        } else {
-            ToastAndroid.showWithGravityAndOffset(
-                'Please enter correct fullName',
+                    );
+                }
+            
+                }
+
+       } 
+       else{
+           ToastAndroid.showWithGravityAndOffset(
+                'Please enter correct Email ',
                 ToastAndroid.LONG,
                 ToastAndroid.BOTTOM,
                 25,
                 50
               );
-        }
-    }
-    else{
-    ToastAndroid.showWithGravityAndOffset(
-      'Please enter correct Email',
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50
-    );
-    }
+       }
     };
 
     const validate = (text) => {
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (reg.test(text) === false) {
             
-            
             return false;
         }
-        else {
-            
-            return true;
+        else { 
+             return true;
+        
         }
     }
+
+    function checkEmail(text) {
+        emailCheck(text).then((res) => {
+            if (res.code == 200){
+                if (res.success == "false"){
+                        ToastAndroid.showWithGravityAndOffset(
+                        res.message,
+                        ToastAndroid.LONG,
+                        ToastAndroid.BOTTOM,
+                        25,
+                        50
+                        );
+                    setCheck(false)
+                }
+                else {
+                    setCheck(true)
+                };  
+                
+            }
+            else {
+                ToastAndroid.showWithGravityAndOffset(
+                res.message,
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50
+                );
+            }
+        })
+        return check
+    }
+    
     
     const fullNameInputChange = (val) => {
         if( val.length !== 0 ) {

@@ -3,6 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './HomeScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import QrScanPickup from './QrScanPickup';
+import QrScanDelivery from './QrScanDelivery';
+import OrderImageUpload from './OrderImageUpload';
+import DigitalSignature from './DigitalSignature';
+import AdditionalInfo from './AdditionalInfo';
 
 const HomeStack = createStackNavigator();
 
@@ -24,7 +29,13 @@ const HomeStackScreen = ({navigation}) => (
     }}>
 
     
-        <HomeStack.Screen name="Home" component={HomeScreen} options={{title:'Home',}} />
+        <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{title:'',}} />
+        <HomeStack.Screen name="AdditionalInfo" component={AdditionalInfo} options={{title:'Additional Information',}} />
+        <HomeStack.Screen name="QrScanPickup" component={QrScanPickup} options={{headerShown: false}}/>
+        <HomeStack.Screen name="QrScanDelivery" component={QrScanDelivery} options={{headerShown: false}}/>
+        <HomeStack.Screen name="OrderImageUpload" component={OrderImageUpload} options={{headerShown: false}}/>
+        <HomeStack.Screen name="DigitalSignature" component={DigitalSignature} options={{headerShown: false}}/>
+
 </HomeStack.Navigator>
 );
 

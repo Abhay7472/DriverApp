@@ -6,6 +6,10 @@ const images = {
   twitter: require('./assets/socialAccountsLogo/twitter.png'),
   linkedIn: require('./assets/socialAccountsLogo/linkedin.png'),
   instagram: require('./assets/socialAccountsLogo/instagram.png'),
+  checklist: require('./assets/cardView/checklist.png'),
+  flowers: require('./assets/cardView/flowers.png'),
+  pills: require('./assets/cardView/pills.png'),
+  home:require('./assets/home.jpeg'),
 }
 
-export default images
+export default images;
