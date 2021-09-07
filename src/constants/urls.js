@@ -13,11 +13,32 @@ export const SCAN_QR_PICKUP = "scan_pickup_order_qr";
 export const SCAN_QR_DELIVERY ="scan_delivery_order_qr_start_ride"
 export const DASHBOARD ="dashboard";
 export const START_DAY="start_day";
+export const REJECT_DAY="reject_day";
 export const ORDER_DETAIL="order_detail_with_merchant";
 export const ADDITIONAL_DETAIL="order_additional_info";
+export const ORDER_ACCEPT="accept_pickup_request";
 export const ORDER_PICKUP_IMAGE="scan_pickup_click_image";
 export const ORDER_PICKUP="order_history_pickup";
 export const ORDER_DROPOFF="order_history_dropoff";
 export const ORDER_REFUSED="order_history_refused";
+export const NOTIFICATIONS="notifications";
+export const FAQ ="faq";
+export const CHECK_BREAK_TIME="check_break_time";
+export const START_BREAK_TIME="start_break_time";
+export const END_BREAK_TIME="end_break_time";
+export const GET_TIME_SLOT ="get_driver_time_slot";
+export const SET_TIME_SLOT ="set_driver_time_slot";
+export const DASHBOARD_MAP ="dashboard_map";
+export const SELFI_UPLOAD ="driver_selfie_upload";
+export const LOCATION_UPDATE ="update_driver_location";
+export const TRACK_SINGLE_Map ="track_order_single_map";
+export const START_Ride ="start_ride_ongoing";
+export const END_RIDE ="end_ride";
+export const HELP_CENTER_LIST ="help_center_list";
+export const NEW_ENQUIRY="add_help_center_list";
+export const HELP_CENTER_ORDER_LIST="order_list"
+export const HELP_CENTER_CHAT_LIST="help_center_msg_list"
+export const SEND_MESSAGE_ADMIN="add_help_center_msg"
+
 
 

@@ -103,7 +103,7 @@ export function DrawerContent(props) {
                         </TouchableRipple>
                     </Drawer.Section>
                      <Drawer.Section >
-                        <TouchableRipple onPress={() =>{}}>
+                        <TouchableRipple onPress={() =>props.navigation.navigate('NotifiStackScreen',{screen: 'HelpCenterListScreen'})}>
                             <View style={styles.preference}>
                                 <Text>Help Center</Text>
                                 <Icon 
@@ -115,7 +115,7 @@ export function DrawerContent(props) {
                         </TouchableRipple>
                     </Drawer.Section>
                      <Drawer.Section >
-                        <TouchableRipple onPress={() =>{}}>
+                        <TouchableRipple onPress={()=>props.navigation.navigate('NotifiStackScreen',{screen: 'FAQScreen'})}>
                             <View style={styles.preference}>
                                 <Text>FAQs</Text>
                                 <Icon 
@@ -126,10 +126,10 @@ export function DrawerContent(props) {
                             </View>
                         </TouchableRipple>
                     </Drawer.Section>
-                     <Drawer.Section >
-                        <TouchableRipple onPress={() =>{}}>
+                    <Drawer.Section >
+                        <TouchableRipple onPress={() =>props.navigation.navigate('NotifiStackScreen',{screen: 'BreakTime'})}>
                             <View style={styles.preference}>
-                                <Text>Vehicle</Text>
+                                <Text>Break Time</Text>
                                 <Icon 
                                     name="chevron-right"  
                                     color={'#000'}
@@ -138,22 +138,10 @@ export function DrawerContent(props) {
                             </View>
                         </TouchableRipple>
                     </Drawer.Section>
-                     <Drawer.Section >
-                        <TouchableRipple onPress={() =>{}}>
+                    <Drawer.Section >
+                        <TouchableRipple onPress={() =>props.navigation.navigate('NotifiStackScreen',{screen: 'DeliveryPreference'})}>
                             <View style={styles.preference}>
                                 <Text>Select Time Slot</Text>
-                                <Icon 
-                                    name="chevron-right"  
-                                    color={'#000'}
-                                    size={22}
-                                />
-                            </View>
-                        </TouchableRipple>
-                    </Drawer.Section>
-                     <Drawer.Section >
-                        <TouchableRipple onPress={() =>{props.navigation.navigate('QRScanPickup')}}>
-                            <View style={styles.preference}>
-                                <Text>Scan QR code</Text>
                                 <Icon 
                                     name="chevron-right"  
                                     color={'#000'}
@@ -174,6 +162,18 @@ export function DrawerContent(props) {
                             </View>
                         </TouchableRipple>
                     </Drawer.Section>
+                    <Drawer.Section >
+                        <TouchableRipple onPress={() =>props.navigation.navigate('NotifiStackScreen',{screen: 'SelfiUpload'})}>
+                            <View style={styles.preference}>
+                                <Text>Selfi Upload</Text>
+                                <Icon 
+                                    name="chevron-right"  
+                                    color={'#000'}
+                                    size={22}
+                                />
+                            </View>
+                        </TouchableRipple>
+                    </Drawer.Section>  
                 </View>
             </DrawerContentScrollView>
             <Drawer.Section style={styles.bottomDrawerSection}>

@@ -21,7 +21,6 @@ import { AuthContext } from '../../components/context';
 import images from '../../images';
 import Button from '../../components/button';
 import loginStyles from './loginComponentsStyles';
-import {getnotifiToken} from '../../constants/tokenHandler'
 import{setuser} from '../../constants/tokenHandler'
 
 const SignInScreen = ({ navigation }) => {
@@ -30,7 +29,6 @@ const SignInScreen = ({ navigation }) => {
     const [data, setData] = useState({
         emailId: '',
         passwordCheck: '',
-        appToken:'',
         check_textInputChange: false,
         secureTextEntry: true,
         isValidUser: true,
@@ -41,25 +39,10 @@ const SignInScreen = ({ navigation }) => {
 
         const { signIn } = React.useContext(AuthContext);
 
-    useEffect(() => {
-         getToken() 
-    }, [])
-
-        const getToken=() =>{
-
-            setTimeout(() => {
-                var response = getnotifiToken()
-            setData({ 
-                ...data,
-                appToken:response});
-            }, 1500);
-              
-        }
-
     const onSignIn =() => { 
         if(validate(data.emailId)){
             if(data.passwordCheck.length > 7){
-                        signin( data.emailId, data.passwordCheck,data.appToken )
+                        signin( data.emailId, data.passwordCheck,)
 
                         .then((res) => {
                         

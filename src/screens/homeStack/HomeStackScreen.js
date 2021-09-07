@@ -8,10 +8,14 @@ import QrScanDelivery from './QrScanDelivery';
 import OrderImageUpload from './OrderImageUpload';
 import DigitalSignature from './DigitalSignature';
 import AdditionalInfo from './AdditionalInfo';
+import OrderDetailsScreen from './OrderDetailsScreen';
+import DeliveryConfirmation from './DeliveryConfirmation';``
+import Tracking from './Tracking';
+
 
 const HomeStack = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => (
+const HomeStackScreen = (props,{route,navigation}) => (
 <HomeStack.Navigator screenOptions={{
         headerStyle: {
         backgroundColor: '#000'},
@@ -20,21 +24,22 @@ const HomeStackScreen = ({navigation}) => (
         fontWeight: 'bold'
         },
         headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => navigation.openDrawer()}></Icon.Button> 
+            <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => props.navigation.openDrawer()}></Icon.Button> 
         ),
 
         headerRight: () => (
-            <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => {}}></FontAwesome.Button>
+            <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => props.navigation.navigate('NotifiStackScreen', { screen: 'Notifications'})}></FontAwesome.Button>
         )
     }}>
-
-    
-        <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{title:'',}} />
+        <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{title:'Home',}} />
         <HomeStack.Screen name="AdditionalInfo" component={AdditionalInfo} options={{title:'Additional Information',}} />
+        <HomeStack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} options={{title:'Order Details',}} />
         <HomeStack.Screen name="QrScanPickup" component={QrScanPickup} options={{headerShown: false}}/>
         <HomeStack.Screen name="QrScanDelivery" component={QrScanDelivery} options={{headerShown: false}}/>
         <HomeStack.Screen name="OrderImageUpload" component={OrderImageUpload} options={{headerShown: false}}/>
-        <HomeStack.Screen name="DigitalSignature" component={DigitalSignature} options={{headerShown: false}}/>
+        <HomeStack.Screen name="DigitalSignature" component={DigitalSignature} options={{headerShown: false}}/>        
+        <HomeStack.Screen name="DeliveryConfirmation" component={DeliveryConfirmation} options={{title:'Delivery Confirmation',}}/>
+         <HomeStack.Screen name="Tracking" component={Tracking} options={{title:'Tracking',}}/>
 
 </HomeStack.Navigator>
 );

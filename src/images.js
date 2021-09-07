@@ -10,6 +10,7 @@ const images = {
   flowers: require('./assets/cardView/flowers.png'),
   pills: require('./assets/cardView/pills.png'),
   home:require('./assets/home.jpeg'),
+  mapMarker:require('./assets/mapMarker.png'),
 }
 
 export default images;

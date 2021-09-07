@@ -1,7 +1,5 @@
 import * as Constants from "../constants/urls";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getuser} from '../constants/tokenHandler';
-
+import {getuser, getnotifiToken} from '../constants/tokenHandler';
 
 export const emailCheck = (emailId) => {
     
@@ -125,14 +123,16 @@ export const signup = (fullName, contactNo, emailId, passwordCheck, driversLicen
 }
 
 
-export const signin = (emailId, passwordCheck,appToken) => {
+export const signin = (emailId, passwordCheck) => {
     const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.SIGN_IN;
 
+    deviceToken = null;
+    deviceToken = getnotifiToken()
     let formdata = new FormData();
     formdata.append("email", emailId)
     formdata.append("password",passwordCheck)
-    formdata.append("app_reg_token",appToken)
-    
+    formdata.append("app_reg_token",deviceToken)
+    console.log(formdata)
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -147,6 +147,7 @@ export const signin = (emailId, passwordCheck,appToken) => {
         console.error('signIn api',error);
     });
 }
+
 
 export const resetPassword = (emailId) => {
     const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.FORGET_PASSWORD;
@@ -206,6 +207,26 @@ export const logout = () => {
     token = null;
     token = getuser()
   const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.LOGOUT;
+  return fetch(URL,{
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      return json;
+    })
+    .catch((error) => {
+      console.error("error here", error );
+    });
+};
+
+export const notification = () => {
+    token = null;
+    token = getuser()
+  const URL = Constants.BASE_URL+Constants.SUB_URL+Constants.NOTIFICATIONS; 
   return fetch(URL,{
       headers: {
             'Accept': 'application/json',

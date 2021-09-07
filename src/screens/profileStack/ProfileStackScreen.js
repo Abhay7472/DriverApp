@@ -4,9 +4,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileScreen from './ProfileScreen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+
 const ProfileStack = createStackNavigator();
 
-const ProfileStackScreen = ({navigation}) => (
+const ProfileStackScreen = (props,{navigation}) => (
 <ProfileStack.Navigator screenOptions={{
         headerStyle: {
         backgroundColor: '#000'},
@@ -15,11 +16,11 @@ const ProfileStackScreen = ({navigation}) => (
         fontWeight: 'bold'
         },
         headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => navigation.openDrawer()}></Icon.Button> 
+            <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => props.navigation.openDrawer()}></Icon.Button> 
         ),
 
         headerRight: () => (
-            <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => {}}></FontAwesome.Button>
+             <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => props.navigation.navigate('NotifiStackScreen', { screen: 'Notifications'})}></FontAwesome.Button>
         )
     }}>
 

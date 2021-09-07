@@ -63,9 +63,7 @@ const BecameAgentScreen = ({navigation}) => {
         />
 
       <ScrollView>
-      <Animated.View style={{
-        opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-    }}>
+      <Animated.View style={{opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),}}>
       <Card style={styles.card}>
            
             <View style={styles.imageView}>

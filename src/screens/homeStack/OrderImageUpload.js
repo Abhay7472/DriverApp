@@ -19,7 +19,7 @@ const OrderImageUpload = ({route,navigation}) => {
   const [data, setData] = useState({
         scan: true,
         ScanResult: false,
-        result: '',
+        orderId: '',
     });
   const [picture,setPicture] =useState([])
 
@@ -31,13 +31,14 @@ const OrderImageUpload = ({route,navigation}) => {
             height: 400,
             cropping: true
             }).then(val => {onSuccess(val)})
-        .catch(e => alert(e));
+        .catch(e => {alert(e)
+        navigation.navigate('HomeScreen')});
         
     }, [])
-
+   console.log("val",route.params.deliveryType)
     const onSuccess = (val) => {
-            console.log(val)
-            orderImageUpload(val,route.params.id,route.params.delivery)
+           
+            orderImageUpload(val,route.params.id,route.params.deliveryType)
                 .then((res) => {            
                     if (res.code == 200){
                         if (res.success == "false"){
@@ -46,7 +47,7 @@ const OrderImageUpload = ({route,navigation}) => {
                         else {
                         alert(res.message)
                         // console.log('res..',res)
-                        navigation.navigate('HomeScreen')
+                       navigation.navigate('HomeScreen')
                         }
                     }
                     else {

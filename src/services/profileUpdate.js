@@ -14,7 +14,6 @@ export const getProfile = () => {
     })
     .then((response) => response.json())
     .then((json) => {
-      console.log('here',json)
       return json;
     })
     .catch((error) => {
@@ -57,3 +56,4 @@ export const editProfile = (contactNo,address,areaCode,city,state,bankName,benif
     });
 
 };
+

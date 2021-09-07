@@ -9,7 +9,7 @@ import OrderTabNav from './OrderTabNav';
 
 const OrderHistory = createStackNavigator();
 
-const OrderHistoryScreen = ({navigation}) => (
+const OrderHistoryScreen = (props,{navigation}) => (
 
 <OrderHistory.Navigator screenOptions={{
         headerStyle: {
@@ -21,7 +21,8 @@ const OrderHistoryScreen = ({navigation}) => (
         headerLeft: () => (
             <Icon.Button name="ios-menu" size={25} backgroundColor="#000" onPress={() => navigation.openDrawer()}></Icon.Button> ),
         headerRight: () => (
-            <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => {}}></FontAwesome.Button>)
+             <FontAwesome.Button name="bell" size={20} backgroundColor="#000" onPress={() => props.navigation.navigate('NotifiStackScreen', { screen: 'Notifications'})}></FontAwesome.Button>
+            )
     }}>
 
         <OrderHistory.Screen name="OrderTabNav" component={OrderTabNav} options={{title:'Order History',}}/>

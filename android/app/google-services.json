@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "682823174743",
-    "project_id": "smartbox-232f2",
-    "storage_bucket": "smartbox-232f2.appspot.com"
+    "project_number": "1054216154672",
+    "project_id": "smartbox-ea15c",
+    "storage_bucket": "smartbox-ea15c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:682823174743:android:2ddeb3a3be350f56957112",
+        "mobilesdk_app_id": "1:1054216154672:android:974bb5daad5c00041cc7f5",
         "android_client_info": {
           "package_name": "com.driverapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "682823174743-jnr69f1much1jum68ds4toeljjqff61p.apps.googleusercontent.com",
+          "client_id": "1054216154672-3ahvos0jpr0n4up062fpcd0jjl4nd8mm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDCd0vUQDiWNVbvIy5yTunjFhPU_8Y--Mw"
+          "current_key": "AIzaSyBveUuZbICuLSJ70BNqMku0BWJ3TBreqHo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "682823174743-jnr69f1much1jum68ds4toeljjqff61p.apps.googleusercontent.com",
+              "client_id": "1054216154672-3ahvos0jpr0n4up062fpcd0jjl4nd8mm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

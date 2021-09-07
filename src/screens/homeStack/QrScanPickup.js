@@ -22,12 +22,8 @@ const QrScanPickup = ({navigation}) => {
   const [data, setData] = useState({
     scan: true,
     ScanResult: false,
-  });
-  const [value, setValue] =useState({
-    scanType:'',
     orderId:'',
-  })
-
+  });
  
   const onSuccess = (e) => {
     const check = String(e.data);
@@ -35,23 +31,23 @@ const QrScanPickup = ({navigation}) => {
       scan: false,
       ScanResult: true,  
       })
-      console.log('new data is....',value)
 
     onQRScanPickup(check)
       .then((res) => {            
         if (res.code == 200){
-            if (res.success == "false"){
-                alert(res.message)
-              navigation.navigate('HomeScreen')
-            } 
-            else {
+        
+          if (res.success == "false"){
               alert(res.message)
-              navigation.navigate('HomeScreen')
-               setData({
-                scan: true,
-                ScanResult: false
-                }) 
-            }
+            navigation.navigate('HomeScreen')
+          } 
+          else {
+            alert(res.message)
+            navigation.navigate('AdditionalInfo', {orderId: res.order_id})
+              setData({
+              scan: true,
+              ScanResult: false
+              }) 
+          }
         }
 
         else {
@@ -60,7 +56,7 @@ const QrScanPickup = ({navigation}) => {
           scan: true,
           ScanResult: false
           }) 
-      }
+        }
                                     
     })
   }

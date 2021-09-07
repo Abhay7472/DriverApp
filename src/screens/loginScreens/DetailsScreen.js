@@ -401,10 +401,8 @@ const instagramInputChange = (val) => {
         }
     }
         function onSignup() {
-            
-          console.log("insignup")
-        //    if (data.driversLicense.length == 10){
-           signup(route.params.fullName, route.params.contactNo, route.params.emailId, route.params.passwordCheck, data.driversLicense, data.backgroundCheck, data.registration, data.licensePlateNo,
+           setLoading(true);
+            signup(route.params.fullName, route.params.contactNo, route.params.emailId, route.params.passwordCheck, data.driversLicense, data.backgroundCheck, data.registration, data.licensePlateNo,
                     data.insurance, data.socialSecurityNo, data.driversLicensePhoto, data.backgroundCheckPhoto,data.registrationPhoto, data.licensePlateNoPhoto, data.insurancePhoto, data.socialSecurityNoPhoto, data.driverPhoto,
                     data.facebook,data.linkedin,data.twitter, data.instagracdm )
 
@@ -418,23 +416,10 @@ const instagramInputChange = (val) => {
                         navigation.navigate('SignUpScreen')
                         } 
                     else {
-                        alert('Sign Up Successful','Confirmation Email is sent on your registerd email')
-                        // const foundUser = async () => {
-                            
-                        // try {
-                        //     await AsyncStorage.setItem(
-                        //     'userToken',
-                        //     res["driver_details"]["access_token_db"]
-                        //     );
-                        // } catch (error) {
-                        //     console.log("setData error", e)
-                        // }
-                        
-                        // };
-                        // foundUser();
-                        // signUp(res["driver_details"]["access_token_db"])
+                        alert(res.message)
                         navigation.navigate('SignInScreen')
                         console.log(res["driver_details"]["access_token_db"]);
+                        setLoading(false)
                     }
                     }
                     else {
@@ -450,17 +435,8 @@ const instagramInputChange = (val) => {
                     
                 })
            }
-        //     else {
-        //         ToastAndroid.showWithGravityAndOffset(
-        //         'Please enter Correct Contact',
-        //         ToastAndroid.LONG,
-        //         ToastAndroid.BOTTOM,
-        //         25,
-        //         50
-        //         ); 
-        // }
 
-         // }    
+
     return (
       <SafeAreaView style={loginStyles.container}>
         <StatusBar backgroundColor='#000' barStyle="light-content"/>  
@@ -672,7 +648,7 @@ const instagramInputChange = (val) => {
             </View>
 
             <View style ={ styles.socialInput}>
-              <TextInput style={{flex:1, color:'#fff'}} 
+              <TextInput style={{flex:0.9, color:'#fff', al}} 
               placeholder="Enter Facebook Account" 
               placeholderTextColor="grey"
               onChangeText={(val) => facebookInputChange(val)}
@@ -807,6 +783,7 @@ const styles = StyleSheet.create({
         borderRadius: 40/2,
         resizeMode:'stretch',
         alignItems: 'center',
+        flex:0.1
     },
     cameraIcon:{
         flex: 0.2, 

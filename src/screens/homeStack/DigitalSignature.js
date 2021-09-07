@@ -1,6 +1,5 @@
 import React, {createRef} from 'react';
 
-// import all the components we are going to use
 import {
   SafeAreaView,
   StyleSheet,
@@ -27,6 +26,7 @@ const DigitalSignature = () => {
     //result.pathName - for the file path name
     alert('Signature Captured Successfully');
     console.log(result.encoded);
+    console.log(result.pathName);
   };
 
   const _onDragEvent = () => {
@@ -49,7 +49,7 @@ const DigitalSignature = () => {
           showTitleLabel={false}
           viewMode={'portrait'}
         />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', marginBottom:70}}>
           <TouchableHighlight
             style={styles.buttonStyle}
             onPress={() => {

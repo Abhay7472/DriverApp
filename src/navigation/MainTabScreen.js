@@ -1,12 +1,12 @@
 import React from 'react';
-import  { StyleSheet } from 'react-native';
-
+import  { StyleSheet, } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import OrderHistory from '../screens/orderHistoryStack/OrderHistory';
 import ProfileStackScreen from '../screens/profileStack/ProfileStackScreen';
-import WalletStackScreen from '../screens/walletStack/WalletScreen';
+import LocationScreen from '../screens/locationStack/LocationScreen';
 import HomeStackScreen from '../screens/homeStack/HomeStackScreen';
 
 
@@ -21,7 +21,7 @@ const MainTabScreen = ({ navigation }) => (
       activeTintColor: '#fff',
       style:{
       position:'absolute',
-      bottom: 25,
+      bottom: 8,
       left:20,
       right: 20,
       backgroundColor:'#333',
@@ -30,8 +30,7 @@ const MainTabScreen = ({ navigation }) => (
       keyboardHidesTabBar :true,
       borderTopWidth: 0,
       }
-    }}
-  >
+    }}>
     
       <Tab.Screen
         name="Home"
@@ -44,12 +43,12 @@ const MainTabScreen = ({ navigation }) => (
         }}
       />
       <Tab.Screen
-        name="WalletStack"
-        component={WalletStackScreen}
+        name="LocationScreen"
+        component={LocationScreen}
         options={{
-          tabBarLabel: 'Wallet',
+          tabBarLabel: 'LocationScreen',
           tabBarIcon: ({ color }) => (
-            <Icon name="wallet" color={color} size={26} />
+            <FontAwesome5 name="map-marked-alt" color={color} size={26} />
           ),
           
         }}
@@ -79,9 +78,3 @@ const MainTabScreen = ({ navigation }) => (
 );
 
 export default MainTabScreen;
-
-
-
-
-  
-  

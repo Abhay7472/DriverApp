@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../components/button';
 import { getProfile,editProfile } from "../../services/profileUpdate";
 import {getStateList} from '../../services/auth';
+import { AirbnbRating } from 'react-native-elements';
 
 
 const ProfileScreen = (props) => {
@@ -136,25 +137,25 @@ const ProfileScreen = (props) => {
            console.log("check__",res);
                      
           if (res.code == 200){
-          if (res.success == "false"){
-              alert(res.message)
-          } 
-          else {
-          alert('Profile Updated');
+            if (res.success == "false"){
+                alert(res.message)
+            } 
+            else {
+            alert('Profile Updated');
 
-           saveBankKey();
-          }
+            saveBankKey();
+            }
           }
 
           else {
-          ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-          );
-        }
+            ToastAndroid.showWithGravityAndOffset(
+            res.message,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+            );
+          }
                                       
         })
      }
@@ -183,13 +184,14 @@ const ProfileScreen = (props) => {
               size={120}
           />
             <View style={{marginLeft: 20}}>
-              <Text style={[styles.title, {
-                marginTop:15,
-                marginBottom: 5,
-              }]}>
-                {data.driver_details["full_name"]}
-              </Text>
+              <Text style={[styles.title, { marginTop:15,marginBottom: 5,}]}>{data.driver_details["full_name"]}</Text>
               <Caption style={styles.caption}>Delivery Agent</Caption>
+              <AirbnbRating 
+                isDisabled={true}
+                showRating={false}
+                defaultRating={data.total_rating}
+                size={19}
+              /> 
             </View>
           </View>
         </View>

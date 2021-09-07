@@ -40,8 +40,12 @@ const QrScanDelivery = ({navigation}) => {
                 navigation.navigate('HomeScreen')
             } 
             else {
-              // alert(res.message)
-             navigation.navigate('HomeScreen')
+              alert(res.message)
+             navigation.navigate('AdditionalInfo', {orderId: res.order_id})
+             setData({
+                scan: true,
+                ScanResult: false
+                }) 
             }
         }
 

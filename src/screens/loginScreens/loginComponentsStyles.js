@@ -29,34 +29,34 @@ const loginStyles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   footer: {
-      flex:1,
-      alignItems: 'center',
-      backgroundColor: '#333',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
-      paddingHorizontal: 20,
-      paddingVertical: 30,   
+    flex:1,
+    alignItems: 'center',
+    backgroundColor: '#333',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,   
   },
   
   action: {
-      flexDirection: 'row',
-      marginTop: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#fff',
-      paddingBottom: 5
+    flexDirection: 'row',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#fff',
+    paddingBottom: 5
   },
   textInput: {
-      flex: 1,
-      marginTop: Platform.OS === 'ios' ? 0 : -12,
-      paddingLeft: 10,
-      color: '#fff',
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    paddingLeft: 10,
+    color: '#fff',
   },
 
   submit: { 
-      alignItems: 'center',
-      margin: 50,
-      width:'100%',
-      backgroundColor:'#000'
+    alignItems: 'center',
+    margin: 50,
+    width:'100%',
+    backgroundColor:'#000'
   },
   greyButton:{
     margin:10,
