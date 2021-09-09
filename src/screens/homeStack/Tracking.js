@@ -19,6 +19,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import Button from '../../components/button';
 import Card from '../../components/card';
+import Toaster from '../../services/toasterService';
 
 const Tracking = ({route, navigation}) => {
   const GOOGLE_API_KEY = 'AIzaSyDZeeqeNG3RzOI9fF7DnHUbxDvAqeLKYWM';
@@ -68,13 +69,7 @@ const Tracking = ({route, navigation}) => {
                 }
             }  
             else {
-                    ToastAndroid.showWithGravityAndOffset(
-                    res.message,
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50,
-                    );
+              Toaster.show(res.message,3000)
             }
             });
         }

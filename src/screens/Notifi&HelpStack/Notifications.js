@@ -11,6 +11,7 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import {notification} from '../../services/auth';
 import Card from '../../components/card';
+import Toaster from '../../services/toasterService';
 
 
 const Notifications = navigation => {
@@ -43,13 +44,7 @@ const Notifications = navigation => {
         }
         setLoading(false);
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message,3000)
       }
     });
   }

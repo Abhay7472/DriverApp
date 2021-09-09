@@ -23,6 +23,7 @@ import {
   locationPermission,
   getCurrentLocation,
 } from '../../helper/helperFunction';
+import Toaster from '../../services/toasterService';
 
 const HomeScreen = ({navigation}) => {
   const [isLoading, setLoading] = useState(true);
@@ -86,13 +87,7 @@ const HomeScreen = ({navigation}) => {
         setLoading(false);
         getLiveLocation();
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message,3000)
       }
     });
   }
@@ -108,13 +103,7 @@ const HomeScreen = ({navigation}) => {
             //  console.log(res)
           }
         } else {
-          ToastAndroid.showWithGravityAndOffset(
-            res.message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50,
-          );
+          Toaster.show(res.message,3000)
         }
       });
     }
@@ -135,13 +124,7 @@ const HomeScreen = ({navigation}) => {
         }
         setLoading(false);
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message,3000)
       }
     });
   };
@@ -161,13 +144,7 @@ const HomeScreen = ({navigation}) => {
         }
         setLoading(false);
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message,3000)
       }
     });
   };

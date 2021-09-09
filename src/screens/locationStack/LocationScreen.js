@@ -18,6 +18,7 @@ import PolylineDirection from '@react-native-maps/polyline-direction';
 import {useFocusEffect} from '@react-navigation/native';
 import images from '../../images';
 import {mapTab} from '../../services/maps';
+import Toaster from '../../services/toasterService';
 const {width, height} = Dimensions.get('window');
 const CARD_HEIGHT = 200;
 const CARD_WIDTH = width * 0.8;
@@ -27,7 +28,7 @@ const LocationScreen = (props, {navigation}) => {
   const GOOGLE_API_KEY = 'AIzaSyDZeeqeNG3RzOI9fF7DnHUbxDvAqeLKYWM';
   const [state, setState] = React.useState({
     markers: [],
-  });
+  }); 
   const [region, setRegion] = React.useState(initialMapState);
   const [isLoading, setLoading] = useState(true);
   const initialMapState = {
@@ -64,13 +65,7 @@ const LocationScreen = (props, {navigation}) => {
           }
         }
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+       Toaster.show(res.message,3000)
       }
     });
   };

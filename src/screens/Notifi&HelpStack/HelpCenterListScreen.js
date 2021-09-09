@@ -14,6 +14,7 @@ import {helpCenterList} from '../../services/helpCenter&Enquiry';
 import Card from '../../components/card';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Toaster from '../../services/toasterService';
 
 const HelpCenterListScreen = (props, {navigation}) => {
   const [orderList, setOrderList] = useState([]);
@@ -45,13 +46,7 @@ const HelpCenterListScreen = (props, {navigation}) => {
         }
         setLoading(false);
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message,3000)
       }
     });
   }

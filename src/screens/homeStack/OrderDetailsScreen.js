@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {orderDetail,startRide} from '../../services/orderCreate';
 import Button from '../../components/button';
+import Toaster from '../../services/toasterService';
  
 
 const OrderDetailsScreen =({route, navigation})=>{
@@ -26,13 +27,7 @@ const OrderDetailsScreen =({route, navigation})=>{
                 }
             }
             else {
-              ToastAndroid.showWithGravityAndOffset(
-              res.message,
-              ToastAndroid.LONG,
-              ToastAndroid.BOTTOM,
-              25,
-              50
-              );
+                Toaster.show(res.message,3000)
             }
         })
        

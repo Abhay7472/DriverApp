@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { Text, View,ActivityIndicator,FlatList, SafeAreaView,Image,StatusBar } from 'react-native';
 import {orderRefused} from '../../services/History';
 import Card from '../../components/card'
+import Toaster from '../../services/toasterService';
 
 const Refused = () => {
 
@@ -21,13 +22,7 @@ const Refused = () => {
           setLoading(false);   
       }
       else {
-          ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-          );
+        Toaster.show(res.message,3000)
       }
     })
       

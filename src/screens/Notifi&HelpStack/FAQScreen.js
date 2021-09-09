@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import {faqs} from '../../services/breakTime&faq';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Toaster from '../../services/toasterService';
 
 const ExpandableComponent = ({ item, onClickFunction }) => {
 
@@ -76,13 +77,7 @@ const FAQScreen = (props,{navigation})=> {
               setLoading(false);   
           }
           else {
-              ToastAndroid.showWithGravityAndOffset(
-              res.message,
-              ToastAndroid.LONG,
-              ToastAndroid.BOTTOM,
-              25,
-              50
-              );
+            Toaster.show(res.message,3000)
           }
         })     
     }

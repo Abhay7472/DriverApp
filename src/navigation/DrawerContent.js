@@ -18,6 +18,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import{ AuthContext } from '../components/context';
 import { getProfile } from "../services/profileUpdate";
+import Toaster from '../services/toasterService';
 
 
 export function DrawerContent(props) {
@@ -39,13 +40,7 @@ export function DrawerContent(props) {
           setLoading(false);   
       }
       else {
-          ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-          );
+        Toaster.show(res.message,3000)
       }
     })  
   }, []);

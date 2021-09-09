@@ -27,6 +27,7 @@ import {localNotificationService} from './localNotification';
 import {firebase} from '@react-native-firebase/messaging';
 
 import { AuthContext } from './components/context';
+import { Permission, PERMISSIONS_TYPE } from './constants/Permission';
 const Drawer = createDrawerNavigator();
 
 const App = (props,{navigation}) => {
@@ -133,7 +134,13 @@ const App = (props,{navigation}) => {
     }
     
   };
-
+  useEffect(()=>{
+    Permission.requestMultiple([
+      PERMISSIONS_TYPE.photo,
+      PERMISSIONS_TYPE.camera,
+    ]);
+   
+  },[])
   useEffect(() => {
     handleFcmToken();
   }, [])

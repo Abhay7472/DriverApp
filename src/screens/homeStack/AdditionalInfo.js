@@ -7,6 +7,7 @@ import Button from '../../components/button';
 import {additionalDetail} from '../../services/orderCreate';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Toaster from '../../services/toasterService';
 
 
 const AdditionalInfo = ({route, navigation}) => {
@@ -57,13 +58,7 @@ const AdditionalInfo = ({route, navigation}) => {
              }
             }
             else {
-                ToastAndroid.showWithGravityAndOffset(
-                res.message,
-                ToastAndroid.LONG,
-                ToastAndroid.BOTTOM,
-                25,
-                50
-                );
+                Toaster.show(res.message,3000)
             }
           
         })

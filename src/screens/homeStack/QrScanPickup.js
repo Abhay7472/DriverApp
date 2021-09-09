@@ -1,21 +1,14 @@
-import React, { Component, Fragment,useEffect,useState } from 'react';
+import React, { Fragment,useState } from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import {
-  TouchableOpacity,
   Text,
   StatusBar,
-  Linking,
   View,
   Dimensions,
-  StyleSheet,
-  Alert,
-  ActivityIndicator
-} from 'react-native';
+  StyleSheet} from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {onQRScanPickup} from '../../services/orderCreate';
-import {getuser} from '../../constants/tokenHandler'
 
 const QrScanPickup = ({navigation}) => {
   

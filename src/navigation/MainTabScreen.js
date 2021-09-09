@@ -8,6 +8,7 @@ import OrderHistory from '../screens/orderHistoryStack/OrderHistory';
 import ProfileStackScreen from '../screens/profileStack/ProfileStackScreen';
 import LocationScreen from '../screens/locationStack/LocationScreen';
 import HomeStackScreen from '../screens/homeStack/HomeStackScreen';
+import { phoneHeight } from '../constants/phoneheight';
 
 
 const Tab = createBottomTabNavigator();
@@ -20,15 +21,13 @@ const MainTabScreen = ({ navigation }) => (
       showLabel: false,
       activeTintColor: '#fff',
       style:{
-      position:'absolute',
-      bottom: 8,
-      left:20,
-      right: 20,
-      backgroundColor:'#333',
-      borderRadius: 50,
-      height:50,
-      keyboardHidesTabBar :true,
-      borderTopWidth: 0,
+         position: 'absolute',
+          bottom: phoneHeight() < 640 ? 10 : 25,
+          left: 20,
+          right: 20,
+          backgroundColor: '#333',
+          borderRadius: 50,
+          borderTopWidth: 0,
       }
     }}>
     
@@ -38,7 +37,7 @@ const MainTabScreen = ({ navigation }) => (
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({  color }) => (
-            <Icon name="ios-home" color={color} size={26} />
+            <Icon name="ios-home" color={color} size={26}  style={{marginTop: phoneHeight() < 640 ? 0 : 30, height:28}} />
           ),
         }}
       />
@@ -48,7 +47,7 @@ const MainTabScreen = ({ navigation }) => (
         options={{
           tabBarLabel: 'LocationScreen',
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="map-marked-alt" color={color} size={26} />
+            <FontAwesome5 name="map-marked-alt" color={color} size={26}  style={{marginTop: phoneHeight() < 640 ? 0 : 30, height:28}} />
           ),
           
         }}
@@ -59,7 +58,7 @@ const MainTabScreen = ({ navigation }) => (
         options={{
           tabBarLabel: 'OrderHistory',
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="history" color={color} size={26}/>
+            <FontAwesome name="history" color={color} size={26}  style={{marginTop: phoneHeight() < 640 ? 0 : 30, height:28}}/>
           ),
         }}
       />
@@ -69,7 +68,7 @@ const MainTabScreen = ({ navigation }) => (
         options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color }) => (
-            <Icon name="ios-person" color={color} size={26} />
+            <Icon name="ios-person" color={color} size={26}  style={{marginTop: phoneHeight() < 640 ? 0 : 30, height:28}} />
           ),
           }}
           

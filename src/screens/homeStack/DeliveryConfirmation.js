@@ -8,6 +8,7 @@ import Card from '../../components/card';
 import SignatureCapture from 'react-native-signature-capture';
 import ImagePicker from 'react-native-image-crop-picker';
 import {rideEnd} from '../../services/orderCreate';
+import Toaster from '../../services/toasterService';
 
 const DeliveryConfirmation =({route, navigation})=>{
     
@@ -119,13 +120,7 @@ const DeliveryConfirmation =({route, navigation})=>{
                 
             }
         } else {
-            ToastAndroid.showWithGravityAndOffset(
-            res.message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50,
-            );
+            Toaster.show(res.message,3000)
         }
         });
     };

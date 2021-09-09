@@ -17,6 +17,7 @@ import { Picker } from '@react-native-picker/picker';
 import Button from '../../components/button';
 import profileStyles from '../profileStack/profileStyle';
 import {newEnquiry,getOrderList} from '../../services/helpCenter&Enquiry';
+import Toaster from '../../services/toasterService';
 
 const NewEnquiry = (props,{navigation}) => {
   const [data, setData] = useState({
@@ -58,13 +59,7 @@ const NewEnquiry = (props,{navigation}) => {
           }
           setLoading(false)
         } else {
-          ToastAndroid.showWithGravityAndOffset(
-            res.message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50,
-          );
+          Toaster.show(res.message,3000)
         }
       });
   };
@@ -82,13 +77,7 @@ const NewEnquiry = (props,{navigation}) => {
         };   
       }
       else {
-          ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-          );
+        Toaster.show(res.message,3000)
       }
     })
   }
