@@ -13,24 +13,23 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 import Button from '../../components/button';
 import profileStyles from '../profileStack/profileStyle';
-import {newEnquiry,getOrderList} from '../../services/helpCenter&Enquiry';
+import {newEnquiry, getOrderList} from '../../services/helpCenter&Enquiry';
 import Toaster from '../../services/toasterService';
 
-const NewEnquiry = (props,{navigation}) => {
+const NewEnquiry = (props, {navigation}) => {
   const [data, setData] = useState({
     orderId: '',
     enquiry: '',
   });
-  const[orderList, setOrderList]= useState([])
-  const [isLoading,setLoading] =useState(true)
+  const [orderList, setOrderList] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    
-    OrderIdList()    
-  }, [])
+    OrderIdList();
+  }, []);
 
   const orderIdInputChange = val => {
     setData({
@@ -38,7 +37,6 @@ const NewEnquiry = (props,{navigation}) => {
       orderId: val,
     });
   };
-
 
   const enquiryInputChange = val => {
     setData({
@@ -48,38 +46,38 @@ const NewEnquiry = (props,{navigation}) => {
   };
 
   const onSubmit = () => {
-    setLoading(true)
-    
-      newEnquiry(data.orderId, data.enquiry).then(res => {
-        if (res.code == 200) {
-          if (res.success == 'false') {
-            alert(res.message);
-          } else {
-            props.navigation.navigate('HelpCenterChat', {ticketId:res.ticket_id,orderID:res.orderID})
-          }
-          setLoading(false)
+    setLoading(true);
+
+    newEnquiry(data.orderId, data.enquiry).then(res => {
+      if (res.code == 200) {
+        if (res.success == 'false') {
+          alert(res.message);
         } else {
-          Toaster.show(res.message,3000)
+          props.navigation.navigate('HelpCenterChat', {
+            ticketId: res.ticket_id,
+            orderID: res.orderID,
+          });
         }
-      });
+        setLoading(false);
+      } else {
+        Toaster.show(res.message, 3000);
+      }
+    });
   };
 
-  function OrderIdList(){
-    getOrderList()  
-      .then((res) => {
-      if (res.code == 200){
-          if (res.success == "false"){
-              alert(res.message)
-          }
-        else {
+  function OrderIdList() {
+    getOrderList().then(res => {
+      if (res.code == 200) {
+        if (res.success == 'false') {
+          alert(res.message);
+        } else {
           setOrderList(res.orders_list);
           setLoading(false);
-        };   
+        }
+      } else {
+        Toaster.show(res.message, 3000);
       }
-      else {
-        Toaster.show(res.message,3000)
-      }
-    })
+    });
   }
 
   if (isLoading) {
@@ -91,13 +89,11 @@ const NewEnquiry = (props,{navigation}) => {
       </View>
     );
   } else {
-
-  return (
-    <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-      <ScrollView style={{marginBottom: 70, paddingHorizontal: 20}}>
-        
-        <Text style={profileStyles.text_footer}>Order Id</Text>
-        <View style={profileStyles.action}>
+    return (
+      <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
+        <ScrollView style={{marginBottom: 70, paddingHorizontal: 20}}>
+          <Text style={profileStyles.text_footer}>Order Id</Text>
+          {/* <View style={profileStyles.action}>
           <Picker
           
             style={{ color:'#fff',width: '100%',marginTop:-5}}
@@ -113,33 +109,48 @@ const NewEnquiry = (props,{navigation}) => {
               />
             ))}
           </Picker>
-       
-        </View>
+        
+        </View> */}
+          <View
+            style={{
+              marginTop: 5,
+              borderBottomWidth: 1,
+              borderBottomColor: '#fff',
+            }}>
+            <DropdownComponent
+              title={data.orderId}
+              dropdownData={orderList}
+              onPress={data => {
+                setAccountType(data.id);
+              }}
+              type="orderId"
+            />
+          </View>
+          <Text style={profileStyles.text_footer}>Enquiry Details</Text>
+          <View style={{marginTop: 25}}>
+            <TextInput
+              placeholder="Enter Enquiry here "
+              multiline={true}
+              numberOfLines={8}
+              style={[profileStyles.textInput, {backgroundColor: 'grey'}]}
+              onChangeText={val => enquiryInputChange(val)}
+            />
+          </View>
 
-        <Text style={profileStyles.text_footer}>Enquiry Details</Text>
-        <View style={{marginTop: 25}}>
-          <TextInput
-            placeholder="Enter Enquiry here "
-            multiline={true}
-            numberOfLines={8}
-            style={[profileStyles.textInput, {backgroundColor: 'grey'}]}
-            onChangeText={val => enquiryInputChange(val)}
-          />
-        </View>
-
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginVertical: 30,
-          }}>
-          <Button onPress={() => onSubmit()}>
-            <Text style={{color: '#fff', fontSize: 17}}>Submit</Text>
-          </Button>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  )};
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginVertical: 30,
+            }}>
+            <Button onPress={() => onSubmit()}>
+              <Text style={{color: '#fff', fontSize: 17}}>Submit</Text>
+            </Button>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 };
 
 export default NewEnquiry;

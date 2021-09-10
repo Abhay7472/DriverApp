@@ -16,6 +16,7 @@ const NotifiStack = createStackNavigator();
 
 const NotifiStackScreen = (props,{route,navigation}) => (
 <NotifiStack.Navigator 
+
     screenOptions={{
         headerStyle: {
         backgroundColor: '#000'},

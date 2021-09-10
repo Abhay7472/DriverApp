@@ -14,7 +14,7 @@ class LocalNotificationService {
                     return
                 }
                 notification.userInteraction = true;
-                onOpenNotification(Platform.OS === 'ios' ? notification.data.item : notification.data);
+                onOpenNotification(Platform.OS === 'ios' ? notification.data : notification.data);
 
                 if (Platform.OS === 'ios') {
                     // (required) Called when a remote is received or opened, or local notification is opened
@@ -28,6 +28,7 @@ class LocalNotificationService {
             },
             popInitialNotification: true,
             requestPermissions: true,
+        
         })
     }
 
@@ -69,7 +70,9 @@ class LocalNotificationService {
             category: options.category || "",
             userInfo: {
                 id: id,
-                item: data
+                item: data,
+                title:title,
+                message:message
             }
         }
     }

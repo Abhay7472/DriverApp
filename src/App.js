@@ -116,6 +116,7 @@ const App = (props,{navigation}) => {
       const options = {
         soundName: 'default',
         playSound: true, //,
+        foreground:true
       };
       localNotificationService.showNotification(
         0,
@@ -128,8 +129,8 @@ const App = (props,{navigation}) => {
 
     function onOpenNotification(notify) {
       console.log('[App]: ', notify);
-      // navigationRef.current.navigate('SelfiUpload', {'notificationId': notify.notification_id });
-      navigationRef.current.navigate('NotifiStackScreen',{screen: 'SelfiUpload'})
+      var notificationDetails =JSON.parse(notify?.notification_detail);
+      navigationRef.current.navigate('NotifiStackScreen',{screen: 'SelfiUpload',params:notificationDetails})
       
     }
     

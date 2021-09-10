@@ -18,6 +18,7 @@ import {emailCheck} from '../../services/auth';
 import images from '../../images';
 import Button from '../../components/button';
 import loginStyles from './loginComponentsStyles';
+import Toaster from '../../services/toasterService';
 
 const SignInScreen = ({navigation}) => {
   const [data, setData] = React.useState({
@@ -50,41 +51,21 @@ const SignInScreen = ({navigation}) => {
                 passwordCheck: data.passwordCheck,
               });
             } else {
-              ToastAndroid.showWithGravityAndOffset(
-                'Please enter correct password',
-                ToastAndroid.LONG,
-                ToastAndroid.BOTTOM,
-                25,
-                50,
-              );
+               Toaster.show( 'Please enter correct password',3000);
+             
             }
           } else {
-            ToastAndroid.showWithGravityAndOffset(
-              'Please enter correct Contact Number',
-              ToastAndroid.LONG,
-              ToastAndroid.BOTTOM,
-              25,
-              50,
-            );
+            Toaster.show('Please enter correct Contact Number',3000);
+           
           }
         } else {
-          ToastAndroid.showWithGravityAndOffset(
-            'Please enter correct Full Name',
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50,
-          );
+          Toaster.show('Please enter correct Full Name',3000);
+          
         }
       }
     } else {
-      ToastAndroid.showWithGravityAndOffset(
-        'Please enter correct Email ',
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        25,
-        50,
-      );
+      Toaster.show(   'Please enter correct Email ',3000);
+    
     }
   }
 
@@ -177,26 +158,14 @@ const SignInScreen = ({navigation}) => {
     emailCheck(text).then(res => {
       if (res.code == 200) {
         if (res.success == 'false') {
-          ToastAndroid.showWithGravityAndOffset(
-            res.message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50,
-          );
+          Toaster.show(res.message, 3000);
           setCheck(false);
         } else {
           setCheck(true);
           return check;
         }
       } else {
-        ToastAndroid.showWithGravityAndOffset(
-          res.message,
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50,
-        );
+        Toaster.show(res.message, 3000);
       }
     });
     return check;

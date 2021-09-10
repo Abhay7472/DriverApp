@@ -18,6 +18,7 @@ import {Avatar, Title, Caption} from 'react-native-paper';
 import {CommonActions} from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 import Card from '../../components/card';
+import DropdownComponent from '../../components/dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../../components/button';
@@ -27,9 +28,9 @@ import {AirbnbRating} from 'react-native-elements';
 import Toaster from '../../services/toasterService';
 
 const ProfileScreen = props => {
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [data, setData] = React.useState();
-  const [image, setImage] = React.useState([]);
+  const [image, setImage] = React.useState('');
   const [contactNo, setContactNo] = useState('');
   const [address, setAddress] = useState('');
   const [areaCode, setAreaCode] = useState('');
@@ -43,18 +44,32 @@ const ProfileScreen = props => {
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [areaCodeList, setAreaCodeList] = useState([]);
-
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
+  const accountTypes = [
+    {
+      name: 'Savings Account',
+      id: 1,
+    },
+    {
+      name: 'Current Account',
+      id: 2,
+    },
+  ];
   useEffect(() => {
     ProfileGet();
-    StateList();
   }, []);
 
   function ProfileGet() {
+    setLoading(true);
+    StateList();
     getProfile().then(res => {
       if (res.code == 200) {
         if (res.success == 'false') {
           alert(res.message);
         } else {
+          setLoading(true);
           {
             setData(res);
             setImage(res.driver_details.profile_image);
@@ -75,14 +90,19 @@ const ProfileScreen = props => {
         Toaster.show(res.message, 3000);
       }
     });
+    setLoading(false);
   }
 
   function StateList() {
+    setLoading(true);
     getStateList().then(res => {
       if (res.code == 200) {
+        setLoading(true);
         if (res.success == 'false') {
           alert(res.message);
+          setLoading(false);
         } else {
+          setLoading(true);
           setStateList(res.state_list);
           setCityList(res.city_list);
           setAreaCodeList(res.area_code_list);
@@ -130,7 +150,24 @@ const ProfileScreen = props => {
       }
     });
   }
-
+  useEffect(() => {
+    if (stateList && stateList.length > 0) {
+      const ss = stateList.find(x => x.id === state);
+      setSelectedState(ss?.state_name);
+    }
+  }, [state, stateList]);
+  useEffect(() => {
+    if (cityList && cityList.length > 0) {
+      const ss = cityList.find(x => x.id === city);
+      setSelectedCity(ss?.city_name);
+    }
+  }, [city, cityList]);
+  useEffect(() => {
+    if (areaCodeList && areaCodeList.length > 0) {
+      const ss = areaCodeList.find(x => x.id === areaCode);
+      setSelectedArea(ss?.areaCode);
+    }
+  }, [areaCode, areaCodeList]);
   if (isLoading) {
     return (
       <View
@@ -265,11 +302,10 @@ const ProfileScreen = props => {
               />
             </View>
           </View>
-
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>State</Text>
-            <View style={styles.action}>
-              <Picker
+            <View style={{backgroundColor: '#333333'}}>
+              {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
                 selectedValue={state}
@@ -281,13 +317,19 @@ const ProfileScreen = props => {
                     key={item.id}
                   />
                 ))}
-              </Picker>
+              </Picker> */}
+              <DropdownComponent
+                title={selectedState || 'Please select state'}
+                dropdownData={stateList}
+                onPress={data => setState(data.id)}
+                type="stateList"
+              />
             </View>
           </View>
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>City</Text>
-            <View style={styles.action}>
-              <Picker
+            <View style={{backgroundColor: '#333333'}}>
+              {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
                 selectedValue={city}
@@ -299,13 +341,19 @@ const ProfileScreen = props => {
                     key={item.id}
                   />
                 ))}
-              </Picker>
+              </Picker> */}
+              <DropdownComponent
+                title={selectedCity}
+                dropdownData={cityList}
+                onPress={data => setCity(data.id)}
+                type="cityList"
+              />
             </View>
           </View>
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>Area Code</Text>
-            <View style={styles.action}>
-              <Picker
+            <View style={{backgroundColor: '#333333'}}>
+              {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
                 selectedValue={areaCode}
@@ -319,7 +367,13 @@ const ProfileScreen = props => {
                     key={item.id}
                   />
                 ))}
-              </Picker>
+              </Picker> */}
+              <DropdownComponent
+                title={selectedArea || 'Please select area code'}
+                dropdownData={areaCodeList}
+                onPress={data => setAreaCode(data.id)}
+                type="areacode"
+              />
             </View>
           </View>
           <View
@@ -394,7 +448,7 @@ const ProfileScreen = props => {
 
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>Account Type</Text>
-            <View style={styles.action}>
+            {/* <View style={styles.action}>
               <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
@@ -406,6 +460,14 @@ const ProfileScreen = props => {
               <View style={styles.arrowWrapper}>
                 <Text style={styles.arrow}>&#9660;</Text>
               </View>
+            </View> */}
+            <View style={{backgroundColor: '#333333'}}>
+              <DropdownComponent
+                title={accountType || 'Please select account type'}
+                dropdownData={accountTypes}
+                onPress={data => {setAccountType(data.id);}}
+                type="accountType"
+              />
             </View>
           </View>
 

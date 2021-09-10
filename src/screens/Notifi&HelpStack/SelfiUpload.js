@@ -1,9 +1,9 @@
 // import React,{useState,useEffect} from 'react';
-// import { View, 
+// import { View,
 // StyleSheet,
 // SafeAreaView,
 // Image,
-// TouchableOpacity, 
+// TouchableOpacity,
 // StatusBar,
 // ActivityIndicator} from 'react-native';
 // import {useFocusEffect} from '@react-navigation/native';
@@ -14,7 +14,7 @@
 
 //   console.log("route",route)
 //   console.log("navigation",navigation)
-  
+
 //   // const [isLoading, setLoading] = useState(false);
 
 //     // useFocusEffect(
@@ -34,10 +34,9 @@
 //     //   }, [])
 //     // );
 
-
 //   //   const onSuccess = (val) => {
 //   //  setLoading(true)
-//   //     uploadDriverSelfi(val,route.params.notificationId)  
+//   //     uploadDriverSelfi(val,route.params.notificationId)
 //   //       .then((res) => {
 //   //           if (res.code == 200){
 //   //             if (res.success == "false"){
@@ -45,7 +44,7 @@
 //   //             }
 //   //           else {
 //   //              alert(res.message)
-//   //              setLoading(false) 
+//   //              setLoading(false)
 //   //              props.navigation.navigate("HomeScreen")
 //   //            }
 //   //           }
@@ -58,7 +57,7 @@
 //   //               50
 //   //               );
 //   //           }
-          
+
 //   //       })
 
 //   //   console.log("image", val)
@@ -81,26 +80,24 @@
 // export default SelfiUpload;
 
 // const styles = StyleSheet.create({
-  
-  
+
 // });
 
-
 import React from 'react';
-import { Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 
-const SelfiUpload = ({route,navigation}) => {
-  console.log("route",route)
-   console.log("navigation",navigation)
+const SelfiUpload = ({route, navigation}) => {
+  console.log('route', route);
+  console.log('navigation', navigation);
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
       <Text>Hello, world!</Text>
     </View>
-  )
-}
+  );
+};
 export default SelfiUpload;
