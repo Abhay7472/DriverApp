@@ -135,7 +135,6 @@ const ProfileScreen = props => {
       accountNo,
       accountType,
     ).then(res => {
-      console.log('check__', res);
 
       if (res.code == 200) {
         if (res.success == 'false') {
@@ -165,7 +164,8 @@ const ProfileScreen = props => {
   useEffect(() => {
     if (areaCodeList && areaCodeList.length > 0) {
       const ss = areaCodeList.find(x => x.id === areaCode);
-      setSelectedArea(ss?.areaCode);
+      console.log("ss---",ss)
+      setSelectedArea(ss?.areacode);
     }
   }, [areaCode, areaCodeList]);
   if (isLoading) {
@@ -179,7 +179,7 @@ const ProfileScreen = props => {
     return (
       <SafeAreaView style={{backgroundColor:'#000'}}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
-        <ScrollView style={{marginBottom: 80}}>
+        <ScrollView nestedScrollEnabled = {true} scrollEnabled={true} style={{marginBottom: 80}}>
           <View style={styles.userInfoSection}>
             <View style={{flexDirection: 'row', marginTop: 15}}>
               <Avatar.Image
@@ -304,7 +304,7 @@ const ProfileScreen = props => {
           </View>
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>State</Text>
-            <View style={{backgroundColor: '#333333'}}>
+            <View>
               {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
@@ -328,7 +328,7 @@ const ProfileScreen = props => {
           </View>
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>City</Text>
-            <View style={{backgroundColor: '#333333'}}>
+            <View >
               {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
@@ -352,7 +352,7 @@ const ProfileScreen = props => {
           </View>
           <View style={{paddingHorizontal: 30}}>
             <Text style={styles.text_footer}>Area Code</Text>
-            <View style={{backgroundColor: '#333333'}}>
+            <View >
               {/* <Picker
                 style={styles.picker}
                 itemStyle={styles.pickerItem}
@@ -461,7 +461,7 @@ const ProfileScreen = props => {
                 <Text style={styles.arrow}>&#9660;</Text>
               </View>
             </View> */}
-            <View style={{backgroundColor: '#333333'}}>
+            <View >
               <DropdownComponent
                 title={accountType || 'Please select account type'}
                 dropdownData={accountTypes}
