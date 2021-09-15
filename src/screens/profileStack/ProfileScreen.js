@@ -177,7 +177,7 @@ const ProfileScreen = props => {
     );
   } else {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={{backgroundColor:'#000'}}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
         <ScrollView style={{marginBottom: 80}}>
           <View style={styles.userInfoSection}>

@@ -54,19 +54,19 @@ const DropdownComponent = ({ dropdownData = [], title, onPress, edit, type }) =>
     }
     return (
         <>
-            <View style={styles.dropdownBox}>
+              <View style={styles.dropdownBox}>
                 <View>
                     <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : Platform.OS=='android' ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; }}>
                         <Text style={[styles.title, { color: selectedValue ? 'white' : edit ? 'black' : 'white' }]}>{dropdownValue ? dropdownValue : title}</Text>
                         <Icon name={showDropdown?"chevron-up":"chevron-down"} color="white" size={22} />
                     </TouchableOpacity>
-                    <View style={{height:showDropdown&&200}}>
-                    <ScrollView>
+                    <View style={showDropdown&&styles.setHeight}>
+                        <ScrollView>
                     {
                         showDropdown && dropdownData ? (
                             dropdownData && dropdownData.length > 0 && (
                                 dropdownData && dropdownData.map((item, index) => (
-                                    <View key={index} style={styles.dropdownWrap}>
+                                    <View key={index} style={[styles.dropdownWrap]}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
                                             <Text style={styles.values}>{item? getName(item) : 'Please select'}</Text>
                                         </TouchableOpacity>

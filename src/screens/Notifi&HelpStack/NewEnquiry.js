@@ -18,6 +18,7 @@ import Button from '../../components/button';
 import profileStyles from '../profileStack/profileStyle';
 import {newEnquiry, getOrderList} from '../../services/helpCenter&Enquiry';
 import Toaster from '../../services/toasterService';
+import DropdownComponent from '../../components/dropdown';
 
 const NewEnquiry = (props, {navigation}) => {
   const [data, setData] = useState({
@@ -95,7 +96,6 @@ const NewEnquiry = (props, {navigation}) => {
           <Text style={profileStyles.text_footer}>Order Id</Text>
           {/* <View style={profileStyles.action}>
           <Picker
-          
             style={{ color:'#fff',width: '100%',marginTop:-5}}
             selectedValue={data.orderID}
             onValueChange={(itemValue, itemIndex) =>
@@ -111,12 +111,7 @@ const NewEnquiry = (props, {navigation}) => {
           </Picker>
         
         </View> */}
-          <View
-            style={{
-              marginTop: 5,
-              borderBottomWidth: 1,
-              borderBottomColor: '#fff',
-            }}>
+          <View>
             <DropdownComponent
               title={data.orderId}
               dropdownData={orderList}

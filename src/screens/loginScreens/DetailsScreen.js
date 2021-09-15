@@ -425,7 +425,7 @@ const DetailsScreen = ({route, navigation}) => {
       data.facebook,
       data.linkedin,
       data.twitter,
-      data.instagracdm,
+      data.instagram,
     ).then(res => {
       if (res.code == 200) {
         if (res.success == 'false') {
@@ -639,7 +639,7 @@ const DetailsScreen = ({route, navigation}) => {
 
             <View style={styles.socialInput}>
               <TextInput
-                style={{flex: 0.9, color: '#fff', al}}
+                style={{flex: 0.9, color: '#fff',}}
                 placeholder="Enter Facebook Account"
                 placeholderTextColor="grey"
                 onChangeText={val => facebookInputChange(val)}
