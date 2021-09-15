@@ -115,7 +115,6 @@ const NewEnquiry = (props, {navigation}) => {
               title={data.orderID}
               dropdownData={orderList}
               onPress={data => {
-                console.log(data)
                 orderIdInputChange(data.id);
               }}
               type="orderId"

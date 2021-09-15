@@ -36,9 +36,9 @@ export const START_Ride ="start_ride_ongoing";
 export const END_RIDE ="end_ride";
 export const HELP_CENTER_LIST ="help_center_list";
 export const NEW_ENQUIRY="add_help_center_list";
-export const HELP_CENTER_ORDER_LIST="order_list"
-export const HELP_CENTER_CHAT_LIST="help_center_msg_list"
-export const SEND_MESSAGE_ADMIN="add_help_center_msg"
+export const HELP_CENTER_ORDER_LIST="order_list";
+export const HELP_CENTER_CHAT_LIST="help_center_msg_list";
+export const SEND_MESSAGE_ADMIN="add_help_center_msg";
 
 
 

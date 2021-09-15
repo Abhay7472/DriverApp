@@ -209,7 +209,7 @@ const ProfileScreen = props => {
                 <Text style={[styles.transactionDetails, {color: '#fff'}]}>
                   Money Earned{' '}
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     color: 'green',
                     flex: 0.5,
@@ -217,7 +217,7 @@ const ProfileScreen = props => {
                     fontSize: 16,
                   }}>
                   ({data?.money_earned_per}%)
-                </Text>
+                </Text> */}
               </View>
               <View style={{marginVertical: 6, flexDirection: 'row'}}>
                 <Text style={[styles.transactionDetails, {color: 'green'}]}>
@@ -533,6 +533,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     marginTop: 6,
+    paddingVertical: 4,
   },
   textInput: {
     flex: 1,

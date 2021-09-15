@@ -18,7 +18,6 @@ import PolylineDirection from '@react-native-maps/polyline-direction';
 import {useFocusEffect} from '@react-navigation/native';
 import images from '../../images';
 import {mapTab} from '../../services/maps';
-import Toaster from '../../services/toasterService';
 const {width, height} = Dimensions.get('window');
 const CARD_HEIGHT = 200;
 const CARD_WIDTH = width * 0.8;
@@ -65,7 +64,13 @@ const LocationScreen = (props, {navigation}) => {
           }
         }
       } else {
-        Toaster.show(res.message, 3000);
+        ToastAndroid.showWithGravityAndOffset(
+          res.message,
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50,
+        );
       }
     });
   };
@@ -160,154 +165,122 @@ const LocationScreen = (props, {navigation}) => {
   } else {
     return (
       <View style={styles.container}>
-        {state && state.markers.length > 0 ? (
-          <>
-            <MapView
-              ref={_map}
-              initialRegion={region}
-              onLayout={() => {
-                _map.current.fitToCoordinates(
-                  state &&
-                    state?.markers?.map((marker, index) => {
-                      return marker.order_coordinate;
-                    }),
-                  {
-                    edgePadding: {
-                      top: 80,
-                      right: 80,
-                      bottom: 80,
-                      left: 80,
-                    },
-                    animated: false,
-                  },
-                );
-              }}
-              style={styles.container}
-              provider={PROVIDER_GOOGLE}>
-              {state &&
-                state?.markers.map((marker, index) => {
-                  const scaleStyle = {
-                    transform: [
-                      {
-                        scale: interpolations[index].scale,
-                      },
-                    ],
-                  };
-                  return (
-                    <MapMarkerComponent
-                      marker={marker}
-                      index={index}
-                      scaleStyle={scaleStyle}
-                    />
-                  );
-                })}
-              {/* polyline */}
-
-              <PolylineDirection
-                // origin will be always drivers coordintae
-                origin={state && state?.markers[0].order_coordinate}
-                // condittional drop stops
-                destination={
-                  state && state?.[state.markers.length - 1].order_coordinate
-                }
-                waypoints={
-                  state &&
-                  state?.markers
-                    .filter(
-                      (e, i) =>
-                        i !== 0 || (i !== state && state?.markers.length - 1),
-                    )
-                    .map(e => {
-                      return e.order_coordinate;
-                    })
-                }
-                resetOnChange={false}
-                apiKey={GOOGLE_API_KEY}
-                strokeWidth={2.5}
-                strokeColor="#000"
-                // onReady={({ distance, duration, coordinates, fare }) => {
-                //    console.log({ distance });
-
-                //   route_distance = distance;
-                // }}
+        <MapView
+          ref={_map}
+          initialRegion={region}
+          onLayout={() => {
+            _map.current.fitToCoordinates(
+              state.markers.map((marker, index) => {
+                return marker.order_coordinate;
+              }),
+              {
+                edgePadding: {
+                  top: 80,
+                  right: 80,
+                  bottom: 80,
+                  left: 80,
+                },
+                animated: false,
+              },
+            );
+          }}
+          style={styles.container}
+          provider={PROVIDER_GOOGLE}>
+          {state.markers.map((marker, index) => {
+            const scaleStyle = {
+              transform: [
+                {
+                  scale: interpolations[index].scale,
+                },
+              ],
+            };
+            return (
+              <MapMarkerComponent
+                marker={marker}
+                index={index}
+                scaleStyle={scaleStyle}
               />
-            </MapView>
+            );
+          })}
+          {/* polyline */}
 
-            <Animated.ScrollView
-              ref={_scrollView}
-              horizontal
-              pagingEnabled
-              scrollEventThrottle={1}
-              showsHorizontalScrollIndicator={false}
-              snapToInterval={CARD_WIDTH + 20}
-              snapToAlignment="center"
-              style={styles.scrollView}
-              contentInset={{
-                top: 0,
-                left: SPACING_FOR_CARD_INSET,
-                bottom: 0,
-                right: SPACING_FOR_CARD_INSET,
-              }}
-              contentContainerStyle={{
-                paddingHorizontal:
-                  Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
-              }}
-              onScroll={Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        x: mapAnimation,
-                      },
-                    },
+          <PolylineDirection
+            // origin will be always drivers coordintae
+            origin={state.markers[0].order_coordinate}
+            // condittional drop stops
+            destination={
+              state.markers[state.markers.length - 1].order_coordinate
+            }
+            waypoints={state.markers
+              .filter((e, i) => i !== 0 || i !== state.markers.length - 1)
+              .map(e => {
+                return e.order_coordinate;
+              })}
+            resetOnChange={false}
+            apiKey={GOOGLE_API_KEY}
+            strokeWidth={2.5}
+            strokeColor="#000"
+            // onReady={({ distance, duration, coordinates, fare }) => {
+            //    console.log({ distance });
+
+            //   route_distance = distance;
+            // }}
+          />
+        </MapView>
+
+        <Animated.ScrollView
+          ref={_scrollView}
+          horizontal
+          pagingEnabled
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH + 20}
+          snapToAlignment="center"
+          style={styles.scrollView}
+          contentInset={{
+            top: 0,
+            left: SPACING_FOR_CARD_INSET,
+            bottom: 0,
+            right: SPACING_FOR_CARD_INSET,
+          }}
+          contentContainerStyle={{
+            paddingHorizontal:
+              Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
+          }}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: mapAnimation,
                   },
-                ],
-                {useNativeDriver: true},
-              )}>
-              {state.markers.map((marker, index) => (
-                <View style={styles.card} key={index}>
-                  <View style={styles.textContent}>
-                    <Text numberOfLines={1} style={styles.cardtitle}>
-                      {' '}
-                      Order Id:
-                    </Text>
-                    <Text style={styles.cardDescription}>{marker.orderID}</Text>
-                    <Text numberOfLines={1} style={styles.cardtitle}>
-                      Address:
-                    </Text>
-                    <Text style={styles.cardDescription}>
-                      {marker.street_addr}
-                    </Text>
-                    <Text numberOfLines={1} style={styles.cardtitle}>
-                      Contact No. :
-                    </Text>
-                    <Text numberOfLines={1} style={styles.cardDescription}>
-                      {marker.primary_phone}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-            </Animated.ScrollView>
-          </>
-        ) : (
-          <View
-            style={{
-              backgroundColor: '#121212',
-              flex: 1,
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                color: '#fff',
-                textAlign: 'center',
-                fontSize: 30,
-                borderBottomColor: '#d80000',
-                borderBottomWidth: 2,
-              }}>
-              No orders{' '}
-            </Text>
-          </View>
-        )}
+                },
+              },
+            ],
+            {useNativeDriver: true},
+          )}>
+          {state.markers.map((marker, index) => (
+            <View style={styles.card} key={index}>
+              <View style={styles.textContent}>
+                <Text numberOfLines={1} style={styles.cardtitle}>
+                  {' '}
+                  Order Id:
+                </Text>
+                <Text style={styles.cardDescription}>{marker.orderID}</Text>
+                <Text numberOfLines={1} style={styles.cardtitle}>
+                  Address:
+                </Text>
+                <Text style={styles.cardDescription}>{marker.street_addr}</Text>
+                <Text numberOfLines={1} style={styles.cardtitle}>
+                  Contact No. :
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.primary_phone}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Animated.ScrollView>
       </View>
     );
   }
