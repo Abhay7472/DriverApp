@@ -24,7 +24,7 @@ const DropdownComponent = ({ dropdownData = [], title, onPress, edit, type }) =>
         }else if (type==="accountType"){
             setDropdownValue(data.name);
         }else if (type==="orderId"){
-            setDropdownValue(data.orderId);
+            setDropdownValue(data.orderID);
         }
         setShowDropdown(false);
         setSelectedValue(true);
@@ -48,7 +48,7 @@ const DropdownComponent = ({ dropdownData = [], title, onPress, edit, type }) =>
         }else if (type==="accountType"){
             dropdownValue=data.name;
         }else if (type==="orderId"){
-            dropdownValue=data.orderId;
+            dropdownValue=data.orderID;
         }
         return dropdownValue;
     }
@@ -56,17 +56,17 @@ const DropdownComponent = ({ dropdownData = [], title, onPress, edit, type }) =>
         <>
             <View style={styles.dropdownBox}>
                 <View>
-                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : Platform.OS=='android' ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; }}>
+                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : Platform.OS=='android' ? 10 : 0 ,borderBottomLeftRadius:showDropdown?0:10,borderBottomRightRadius:showDropdown?0:10}]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; }}>
                         <Text style={[styles.title, { color: selectedValue ? 'white' : edit ? 'black' : 'white' }]}>{dropdownValue ? dropdownValue : title}</Text>
                         <Icon name={showDropdown?"chevron-up":"chevron-down"} color="white" size={22} />
                     </TouchableOpacity>
-                    <View style={{height:showDropdown&&200}}>
-                    <ScrollView>
+                    <View style={showDropdown&&styles.setHeight}>
+                    <ScrollView nestedScrollEnabled = {true} scrollEnabled={true}>
                     {
                         showDropdown && dropdownData ? (
                             dropdownData && dropdownData.length > 0 && (
                                 dropdownData && dropdownData.map((item, index) => (
-                                    <View key={index} style={styles.dropdownWrap}>
+                                    <View key={index} style={[styles.dropdownWrap,{height:50}]}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
                                             <Text style={styles.values}>{item? getName(item) : 'Please select'}</Text>
                                         </TouchableOpacity>
@@ -104,16 +104,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.2,
         borderBottomColor: "#a7a7a7",
         width:'100%',
+        backgroundColor: '#333333',
     },
     dropdownInner: {},
     dropdownFlex: {
         paddingHorizontal: 5,
-        paddingVertical: 10,
+        paddingVertical: Platform.OS=='android'?5:10,
         borderBottomWidth: 1,
-        borderBottomColor: '#CACACA',
+        borderBottomColor: '#333333',
         flexDirection:'row',
         alignItems:'center',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        backgroundColor: '#333333',
+        borderRadius:10
     },
     title: {
         color: '#A7A7A7',
@@ -123,5 +126,9 @@ const styles = StyleSheet.create({
     values: {
         color: '#fff',
     },
+    setHeight:{
+        maxHeight:200,
+        overflow:'scroll'
+    }
 });
 export default memo(DropdownComponent);

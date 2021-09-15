@@ -18,7 +18,7 @@ import Button from '../../components/button';
 import profileStyles from '../profileStack/profileStyle';
 import {newEnquiry, getOrderList} from '../../services/helpCenter&Enquiry';
 import Toaster from '../../services/toasterService';
-
+import DropdownComponent from '../../components/dropdown'
 const NewEnquiry = (props, {navigation}) => {
   const [data, setData] = useState({
     orderId: '',
@@ -78,7 +78,7 @@ const NewEnquiry = (props, {navigation}) => {
         Toaster.show(res.message, 3000);
       }
     });
-  }
+  } 
 
   if (isLoading) {
     return (
@@ -118,10 +118,11 @@ const NewEnquiry = (props, {navigation}) => {
               borderBottomColor: '#fff',
             }}>
             <DropdownComponent
-              title={data.orderId}
+              title={data.orderID}
               dropdownData={orderList}
               onPress={data => {
-                setAccountType(data.id);
+                console.log(data)
+                orderIdInputChange(data.id);
               }}
               type="orderId"
             />
@@ -134,6 +135,7 @@ const NewEnquiry = (props, {navigation}) => {
               numberOfLines={8}
               style={[profileStyles.textInput, {backgroundColor: 'grey'}]}
               onChangeText={val => enquiryInputChange(val)}
+              textAlignVertical="top"
             />
           </View>
 
