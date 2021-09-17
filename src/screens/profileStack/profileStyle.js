@@ -35,8 +35,10 @@ const profileStyles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,
+    height: Platform.OS === 'ios' ? 120 :0,
     paddingLeft: 10,
     color: '#fff',
+    borderRadius:10
   },
   columnSection:{
     flex:1,
